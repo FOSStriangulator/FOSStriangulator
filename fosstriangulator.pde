@@ -78,8 +78,8 @@ void setup()
 
 	
 	//println("insets w are: " + widthInsets);
-	surface.setSize(img.width, img.height);
   surface.setResizable(true);
+	surface.setSize(img.width, img.height);
 	surface.setTitle("FOSStriangulator");
   surface.setLocation(initWindowLocationX+controlFrameWidth,initWindowLocationY);
 
