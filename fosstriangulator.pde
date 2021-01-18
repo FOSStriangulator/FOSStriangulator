@@ -28,7 +28,7 @@ int maxEraserSize = 80;
 int minEraserSize = 1;
 boolean displayBlurMessage = false;
 float eraserSize = 5.0;
-PImage img, img_b, img_c, processingTextImg;
+PImage img, img_b, img_c, processingTextImg, icon;
 
 //Control varialbles
 private ControlP5 cp5;
@@ -73,15 +73,16 @@ void setup()
   zoom=1.0;
 	img = loadImage("Instructions.png");
   processingTextImg = loadImage("processing.png");
+  icon = loadImage("icon.png");
+
 	img_b = img.get();
 	img_c = countourImage(img_b, 1,80);
 
-	
-	//println("insets w are: " + widthInsets);
   surface.setResizable(true);
 	surface.setSize(img.width, img.height);
 	surface.setTitle("FOSStriangulator");
   surface.setLocation(initWindowLocationX+controlFrameWidth,initWindowLocationY);
+  surface.setIcon(icon);
 
 	//standard corner points
 	points.add(new PVector(0, 0, 0));
