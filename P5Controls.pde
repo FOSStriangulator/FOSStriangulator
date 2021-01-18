@@ -39,20 +39,26 @@ public class ControlFrame extends PApplet
     int[] largeButtonSize = {(groupWidth - 2*groupInsetX), 20};
     int sliderWidth = 90 + 90 + 25;
     
+    //Color styles 
+    cp5.setColorForeground(Colors.ACCENT_800);
+    cp5.setColorBackground(Colors.BG_800);
+    cp5.setColorActive(Colors.ACCENT_700);
+    
+    //Components
     chooseButton = 
     cp5.addButton("choose")
     .setPosition(marginX,20)
     .setSize(groupWidth,largeButtonSize[1]+10)
     .plugTo(parent,"choose")
-    .setLabel("Choose an Image...")
+    .setLabel("Choose an image...")
     .linebreak()
     ;
   
     Group g2 = 
     cp5.addGroup("g2")
     .setPosition(marginX,chooseButton.getPosition()[1] + chooseButton.getHeight() + 30)
-    .setLabel("Point Generation")
-    .setBackgroundColor(color(0,60))
+    .setLabel("Point generation")
+    .setBackgroundColor(Colors.BG_950)
     .setSize(groupWidth,130)
     .disableCollapse()
     ;
@@ -63,7 +69,7 @@ public class ControlFrame extends PApplet
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,25)
     .setValue(1)
-    .setLabel("Edge Weight")
+    .setLabel("Edge weight")
     .plugTo(parent,"contWeight")
     .setGroup(g2)
     ;
@@ -74,7 +80,7 @@ public class ControlFrame extends PApplet
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,254)
     .setValue(80)
-    .setLabel("Edge Threshold")
+    .setLabel("Edge threshold")
     .plugTo(parent,"contThreshold")
     .setGroup(g2)
     ;
@@ -85,7 +91,7 @@ public class ControlFrame extends PApplet
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,500)
     .setValue(0)
-    .setLabel("# of Edge Points")
+    .setLabel("# of edge points")
     .plugTo(parent,"contourPointsN")
     .setGroup(g2)
     ;
@@ -96,7 +102,7 @@ public class ControlFrame extends PApplet
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,500)
     .setValue(0)
-    .setLabel("# of Random Points")
+    .setLabel("# of random points")
     .plugTo(parent,"randomPointsN")
     .setGroup(g2)
     ;
@@ -104,8 +110,8 @@ public class ControlFrame extends PApplet
     Group g3 = 
     cp5.addGroup("g3")
     .setPosition(marginX,g2.getPosition()[1] + g2.getBackgroundHeight() + 30)
-    .setLabel("Point Control")
-    .setBackgroundColor(color(0,60))
+    .setLabel("Point control")
+    .setBackgroundColor(Colors.BG_950)
     .setSize(groupWidth,60)
     .disableCollapse()
     ;
@@ -115,7 +121,7 @@ public class ControlFrame extends PApplet
     .setPosition(groupInsetX,groupInsetX)
     .setSize(90,largeButtonSize[1])
     .plugTo(parent,"sPoints")
-    .setLabel("Save Points")
+    .setLabel("Save points")
     .setGroup(g3)
     ;
     
@@ -124,7 +130,7 @@ public class ControlFrame extends PApplet
     .setPosition(sPButton.getPosition()[0] + sPButton.getWidth() + 15,groupInsetX)
     .setSize(90,largeButtonSize[1])
     .plugTo(parent,"lPoints")
-    .setLabel("Load Points")
+    .setLabel("Load points")
     .setGroup(g3)
     ;
   
@@ -132,15 +138,15 @@ public class ControlFrame extends PApplet
     .plugTo(parent,"eraser")
     .setPosition(lPButton.getPosition()[0] + lPButton.getWidth() + 15,groupInsetX)
     .setSize(90,largeButtonSize[1])
-    .setLabel("On/Off Eraser (e)")
+    .setLabel("On/off eraser (e)")
     .setGroup(g3)
     ;
   
     Group g4 = 
     cp5.addGroup("g4")
     .setPosition(marginX,g3.getPosition()[1] + g3.getBackgroundHeight() + 30)
-    .setLabel("Display Options")
-    .setBackgroundColor(color(0,60))
+    .setLabel("Display options")
+    .setBackgroundColor(Colors.BG_950)
     .setSize(groupWidth,70)
     .disableCollapse()
     ;
@@ -151,10 +157,10 @@ public class ControlFrame extends PApplet
     .setItemsPerRow(3)
     .setSpacingColumn(90)
     .setSpacingRow(10)
-    .addItem("original (o)",Pass.IMAGE)
-    .addItem("mesh (m)",Pass.MESH)
-    .addItem("contour (c)",Pass.CONTOUR)
-    .addItem("result (r)",Pass.RESULT)
+    .addItem("Original (o)",Pass.IMAGE)
+    .addItem("Mesh (m)",Pass.MESH)
+    .addItem("Contour (c)",Pass.CONTOUR)
+    .addItem("Result (r)",Pass.RESULT)
     .activate(Pass.MESH)
     .plugTo(parent,"passChooser")
     .setGroup(g4)
@@ -177,7 +183,7 @@ public class ControlFrame extends PApplet
     cp5.addButton("savePDF")
     .setPosition(marginX,g4.getPosition()[1] + g4.getBackgroundHeight() + 10)
     .setSize(groupWidth,largeButtonSize[1])
-    .setLabel("Write to PDF")
+    .setLabel("Export to PDF")
     .plugTo(parent,"savePDF")
     ;
        
@@ -185,7 +191,7 @@ public class ControlFrame extends PApplet
     cp5.addButton("saveOBJ")
     .setPosition(marginX,sP.getPosition()[1] + sP.getHeight() + 10)
     .setSize(groupWidth,largeButtonSize[1])
-    .setLabel("Write to OBJ")
+    .setLabel("Export to OBJ")
     .plugTo(parent,"saveOBJ")
     ;
        
@@ -197,16 +203,16 @@ public class ControlFrame extends PApplet
     .setPosition(marginX,sO.getPosition()[1] + 30)
     .setSize(groupWidth,60)
     .setLineHeight(14)
-    .setColor(color(255))
-    .setColorBackground(color(2,52,77))
-    .setBorderColor(color(2,52,77))
-    .setText("Message Window")  
+    .setColor(Colors.ON_BG)
+    .setColorBackground(Colors.BG_950)
+    .setBorderColor(Colors.BG_950)
+    .setText("Messages will appear here")  
     ;
   }
 
   public void draw() 
   {
-      background(100);
+      background(Colors.BG_900);
   }
   
 

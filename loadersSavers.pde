@@ -2,8 +2,8 @@ void pdfFileSave(File selection)
 {
   if (selection == null) 
   {
-    ta.setColor(color(255));
-    ta.setText("Status." + "\n" + "Nothing selected, no file saved.");
+    ta.setColor(Colors.ON_BG);
+    ta.setText("Status:\nNothing selected, no file saved.");
     //JOptionPane.showMessageDialog(this, "No file saved.", "Error!", JOptionPane.INFORMATION_MESSAGE);
   } 
   else
@@ -37,8 +37,8 @@ void pdfFileSave(File selection)
     pdf.dispose();
     pdf.endDraw();
 
-    ta.setColor(color(0, 255, 0));
-    ta.setText("Success." + "\n" + "The File was Saved Successfully!");
+    ta.setColor(Colors.SUCCESS);
+    ta.setText("Success!\nYour file has been saved!");
 
     //JOptionPane.showMessageDialog(this, "The File was Saved Successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
   }//end else null
@@ -48,8 +48,8 @@ void objFileSave(File selection)
 {
   if (selection == null) 
   {
-    ta.setColor(color(255));
-    ta.setText("Status." + "\n" + "Nothing selected, no file saved.");
+    ta.setColor(Colors.ON_BG);
+    ta.setText("Status:\nNothing selected, no file saved.");
   }
   else
   {
@@ -122,8 +122,8 @@ void objFileSave(File selection)
     outputMTL.flush();  // Writes the remaining data to the file
     outputMTL.close();  // Finishes the file
     
-    ta.setColor(color(0, 255, 0));
-    ta.setText("Success." + "\n" + "The File was Saved Successfully!");
+    ta.setColor(Colors.SUCCESS);
+    ta.setText("Success!\nYour file has been saved!");
   }//end else null
 }// end objFileSave
 
@@ -168,21 +168,21 @@ void pointsFileSelect(File selection)
           userPointsHash.add(new PVector(x_, y_, 0));
         }
         loop();
-        ta.setColor(color(0, 255, 0));
-        ta.setText("Success." + "\n" + "Points are loaded.");
+        ta.setColor(Colors.SUCCESS);
+        ta.setText("Success!\nYour points have been loaded.");
         nCPSlider.setValue(0);
         cPSlider.setValue(0);
       }
       else {
-        ta.setColor(color(255, 0, 0));
-        ta.setText("Error." + "\n" + "Points file does not match the loaded image.");
+        ta.setColor(Colors.ERROR);
+        ta.setText("Error!\nPoint file does not match the loaded image.");
         //JOptionPane.showMessageDialog(this, "Points file does not match the loaded image.", "Error!", JOptionPane.INFORMATION_MESSAGE);
       }
     }// end if txt
     else
     {
-      ta.setColor(color(255, 0, 0));
-      ta.setText("Error." + "\n" + "Please choose a txt file.");
+      ta.setColor(Colors.ERROR);
+      ta.setText("Error!\nPlease choose a TXT file.");
       //JOptionPane.showMessageDialog(this, "Please choose a txt file.", "Error!", JOptionPane.INFORMATION_MESSAGE);
     }
   }//end else null
@@ -193,8 +193,8 @@ void imageFileSelect(File selection)
 {
   if (selection == null) 
   {
-    ta.setColor(color(255));
-    ta.setText("Status." + "\n" + "Nothing selected, selection was cancelled.");
+    ta.setColor(Colors.ON_BG);
+    ta.setText("Status:\nNothing selected, selection was cancelled.");
   } 
   else 
   {
@@ -249,7 +249,7 @@ void imageFileSelect(File selection)
 
           //scaledImage.save(selection.getAbsolutePath().substring(0, q)+"_scaled." + extension);
           //img = loadImage(selection.getAbsolutePath().substring(0, q)+"_scaled." + extension);
-          Scaled = (" Original image was too large for your display - scaled to fit");
+          Scaled = ("\nYour image has been scaled to fit, as it was too large for your display.");
           img = scaledImage.get(0,0,targetWidth,targetHeight);
         }// end if img is bigger than display
         
@@ -292,18 +292,18 @@ void imageFileSelect(File selection)
         nCPSlider.setValue(0);
         cPSlider.setValue(0);
 
-        ta.setColor(color(0, 255, 0));
-        ta.setText("Success." + "\n" + "Image file is loaded." + Scaled);
+        ta.setColor(Colors.SUCCESS);
+        ta.setText("Success!\nYour image has been loaded!" + Scaled);
       } 
       else {
-        ta.setColor(color(255, 0, 0));
-        ta.setText("Error." + "\n" + "File chosen is not a valid image file.");
+        ta.setColor(Colors.ERROR);
+        ta.setText("Error!\nFile chosen is not a valid image file.");
       }
     }  
     else
     {
-      ta.setColor(color(255, 0, 0));
-      ta.setText("Error." + "\n" + "Please choose an image file. (JPEG, JPG, PNG, TGA or GIF).");
+      ta.setColor(Colors.ERROR);
+      ta.setText("Error!\nOnly these file types are supported: JPEG, JPG, PNG, TGA, and GIF.");
       //JOptionPane.showMessageDialog(this, "Please choose an image file. (JPEG, JPG, PNG or GIF)", "Error!", JOptionPane.INFORMATION_MESSAGE);
     }
   }//end else selection
@@ -313,8 +313,8 @@ void pointsFileSave(File selection)
 {
   if (selection == null) 
   {
-    ta.setColor(color(255));
-    ta.setText("Status." + "\n" + "Nothing selected, no file saved.");
+    ta.setColor(Colors.ON_BG);
+    ta.setText("Status:\nNothing selected, no file saved.");
     ///JOptionPane.showMessageDialog(this, "No file saved.", "Error!", JOptionPane.INFORMATION_MESSAGE);
   } 
   else
@@ -337,8 +337,8 @@ void pointsFileSave(File selection)
     
     output.flush();  // Writes the remaining data to the file
     output.close();  // Finishes the file
-    ta.setColor(color(0, 255, 0));
-    ta.setText("Success." + "\n" + "The File was Saved Successfully!");
+    ta.setColor(Colors.SUCCESS);
+    ta.setText("Success!\nYour file has been saved!");
     //JOptionPane.showMessageDialog(this, "The File was Saved Successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
   }//end else null
 }// end pointsfilesave
