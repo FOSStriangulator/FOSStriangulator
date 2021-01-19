@@ -86,9 +86,16 @@ void setup()
 {
 	size(400,400);
   zoom=1.0;
-	img = loadImage("Instructions.png");
+  img = loadImage("Instructions.png");
   processingTextImg = loadImage("processing.png");
   icon = loadImage("icon.png");
+
+  /*
+  For flatpaks, use:
+	img = loadImage("/app/share/Instructions.png");
+  processingTextImg = loadImage("/app/share/processing.png");
+  icon = loadImage("/app/share/icon.png");
+  */
 
 	img_b = img.get();
 	img_c = countourImage(img_b, 1,80);
