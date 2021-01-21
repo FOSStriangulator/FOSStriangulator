@@ -6,7 +6,7 @@ Based on [Concept Farm](https://www.conceptfarm.ca/)'s [Image Triangulator](http
 
 ## Download
 
-![Download Flatpak on Flathub](https://www.flathub.org/assets/badges/flathub-badge-en.png)
+[![Download Flatpak on Flathub](https://www.flathub.org/assets/badges/flathub-badge-en.png)](https://flathub.org/apps/details/org.enjoyingfoss.FOSStriangulator)
 
 Windows binaries can be found as ZIP files under [Releases](https://github.com/FOSStriangulator/FOSStriangulator/releases).
 
