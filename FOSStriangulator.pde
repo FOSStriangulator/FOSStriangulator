@@ -46,13 +46,12 @@ float eraserSize = 5.0;
 PImage img, img_b, img_c, processingTextImg, icon;
 
 //Control varialbles
-private ControlP5 cp5;
-ControlFrame cf;
-RadioButton r;
-Toggle e; 
-Textarea ta;
-Slider nCPSlider, cPSlider, cWSlider, cThSlider, TransSlider;
-Button chooseButton, sPButton, lPButton;
+private ControlP5 controlP5;
+RadioButton modeRadio;
+Toggle eraserToggle; 
+Textarea messageArea;
+Slider edgeWeightSlider, edgeThresholdSlider, edgePtsSlider, randomPtsSlider, eraserSizeSlider;
+Button openImageBtn, loadPtsBtn, savePtsBtn;
 int controlFrameWidth = 360;
 int initWindowLocationX = 100;
 int initWindowLocationY = 100;
@@ -84,7 +83,6 @@ IntList nonContourPoints = new IntList();
 
 void setup()
 {
-	size(400,400);
   zoom=1.0;
   img = loadImage("Instructions.png");
   processingTextImg = loadImage("processing.png");
@@ -125,10 +123,10 @@ void setup()
 	cursor(CROSS);
 	smooth();
 
-	cp5 = new ControlP5(this);
-	cf = new ControlFrame(this, 340, 690, "Tools");
+	controlP5 = new ControlP5(this);
+	ControlFrame cf = new ControlFrame(this, 340, 690, "Tools");
 	//noLoop();
-}//end setup
+}
 
 void draw()
 {
@@ -157,7 +155,7 @@ void draw()
         if (displayBlurMessage == true)  {drawBlurMessage();}
         
         break;
-      }//end if displayImage true
+      }
       
       case Pass.CONTOUR:
       {
@@ -172,7 +170,7 @@ void draw()
         if (displayBlurMessage == true)  {drawBlurMessage();}
         
         break;
-      }//end if displayImage true
+      }
       
       case Pass.MESH:
       {
@@ -200,7 +198,7 @@ void draw()
         if (displayBlurMessage == true)  {drawBlurMessage();}
         
         break;
-      }//end if displayResult true
+      }
   
     	case Pass.RESULT:
     	{
@@ -249,7 +247,7 @@ void draw()
         if (refreshBufferOnce == true){refreshBuffer = false;}       
         if (displayBlurMessage == true)  {drawBlurMessage();}
         break;
-    	}//end if displayResult true
+    	}
     
       default:
       {
@@ -260,7 +258,7 @@ void draw()
         
         break;
       }
-    }//end switch
+    }
 
   
   if (deleteMode == true) 
@@ -269,7 +267,7 @@ void draw()
     refreshBuffer = false;
   }
   
-}//end draw
+}
 
 
 /////////////////////////////////////////

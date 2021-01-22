@@ -18,10 +18,10 @@
 //        BUTTON FUNCTIONS             //
 /////////////////////////////////////////
 
-public void eraser(boolean theFlag) 
+public void toggleEraser(boolean eraserOn) 
 {
   //println("delete flag set");
-  if (theFlag==true) 
+  if (eraserOn) 
   {
     deleteMode = true;
     refreshBufferOnce = true;
@@ -36,22 +36,22 @@ public void eraser(boolean theFlag)
   }
 }
 
-public void choose() 
+public void openImage() 
 {
   refreshBuffer = true;
   selectInput("Select a file to process:", "imageFileSelect");
-} //end choose
+}
 
-public void lPoints() 
+public void loadPts() 
 {
   refreshBuffer = true;
   selectInput("Select a points text file:", "pointsFileSelect");
-} //end lPoints
+}
 
-public void sPoints() 
+public void savePts() 
 {
   selectOutput("Save points text file:", "pointsFileSave");
-} //end sPoints
+}
 
 public void savePDF()
 {
@@ -63,62 +63,62 @@ public void saveOBJ()
   selectOutput("Save as a obj:", "objFileSave");
 }
 
-public void contWeight (int _value) 
+public void setEdgeWeight (int _value) 
 {
   if (deleteMode == true){refreshBuffer = true;}
-  img_c = countourImage(img_b, _value, (int)cThSlider.getValue());
+  img_c = countourImage(img_b, _value, (int)edgeThresholdSlider.getValue());
   contourImgPoints = getThresholdPixels (img_c, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
   displayType = Pass.CONTOUR;
-  r.activate(Pass.CONTOUR);
+  modeRadio.activate(Pass.CONTOUR);
 }
 
-public void contThreshold (int _value) 
+public void setEdgeThreshold (int _value) 
 {
   if (deleteMode == true){refreshBuffer = true;}
-  img_c = countourImage(img_b, (int)cWSlider.getValue(),_value);
+  img_c = countourImage(img_b, (int)edgeWeightSlider.getValue(),_value);
   contourImgPoints = getThresholdPixels (img_c, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
   displayType = Pass.CONTOUR;  
-  r.activate(Pass.CONTOUR);
+  modeRadio.activate(Pass.CONTOUR);
 }
 
-public void passChooser(int a) 
+public void setMode(int a) 
 { 
   if (a==Pass.IMAGE)
   {
     displayType = Pass.IMAGE;
-    r.activate(Pass.IMAGE);
+    modeRadio.activate(Pass.IMAGE);
   }  
 
   if (a==Pass.MESH)
   {
     refreshBuffer = true;
     displayType = Pass.MESH;
-    r.activate(Pass.MESH);
+    modeRadio.activate(Pass.MESH);
   }
 
   if (a==Pass.RESULT)
   {
     refreshBuffer = true;
     displayType = Pass.RESULT;
-    r.activate(Pass.RESULT);
+    modeRadio.activate(Pass.RESULT);
   }
   if (a==Pass.CONTOUR)
   {
     displayType = Pass.CONTOUR;
-    r.activate(Pass.CONTOUR);
+    modeRadio.activate(Pass.CONTOUR);
   }
 }
 
 //need to resolve this - currently uses the old pvector list need to convert everything to hashset
-public void randomPointsN(int pointsNumber)
+public void setRandomPts(int pointsNumber)
 {
   //noLoop();
   if (deleteMode == true){refreshBuffer = true;}
-  LinkedHashSet<PVector> contourPointsHash = new LinkedHashSet<PVector>(sublistIntList(contourPoints, 0, (int)cPSlider.getValue()));
+  LinkedHashSet<PVector> contourPointsHash = new LinkedHashSet<PVector>(sublistIntList(contourPoints, 0, (int)edgePtsSlider.getValue()));
   LinkedHashSet<PVector> nonContourPointsHash = new LinkedHashSet<PVector>(sublistIntList(nonContourPoints, 0, pointsNumber));   
   points = new LinkedHashSet<PVector>();
   pointsDisplay = new LinkedHashSet<PVector>();
@@ -132,12 +132,12 @@ public void randomPointsN(int pointsNumber)
   //loop();
 }
 
-public void contourPointsN(int pointsNumber)
+public void setEdgePts(int pointsNumber)
 {
   //noLoop();
   if (deleteMode == true){refreshBuffer = true;}
   LinkedHashSet<PVector> contourPointsHash = new LinkedHashSet<PVector>(sublistIntList(contourPoints, 0, pointsNumber));
-  LinkedHashSet<PVector> nonContourPointsHash = new LinkedHashSet<PVector>(sublistIntList(nonContourPoints, 0, (int)nCPSlider.getValue()));   
+  LinkedHashSet<PVector> nonContourPointsHash = new LinkedHashSet<PVector>(sublistIntList(nonContourPoints, 0, (int)randomPtsSlider.getValue()));   
   points = new LinkedHashSet<PVector>();
   pointsDisplay = new LinkedHashSet<PVector>();
   points.addAll(userPointsHash);
@@ -146,4 +146,11 @@ public void contourPointsN(int pointsNumber)
   
   pointsDisplay.addAll(points);
   //loop();
+}
+
+public void setEraserSize(int size)
+{
+  eraserSize = size;
+  eraserToggle.setState(true);
+  toggleEraser(true);
 }

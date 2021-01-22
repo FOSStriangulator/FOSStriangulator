@@ -107,10 +107,10 @@ void mousePressed()
     }
     points = (LinkedHashSet)pointsDisplay.clone(); 
   }
-} //end mousepressed
+}
 
 void mouseReleased() 
 {
   panMode = false;
   frameRate(60);
-}//end released
+}

@@ -23,7 +23,7 @@ public class ControlFrame extends PApplet
   int w, h;
   String name;
   PApplet parent;
-  ControlP5 cp5;
+  ControlP5 controlP5;
   
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) 
   {
@@ -46,7 +46,7 @@ public class ControlFrame extends PApplet
     surface.setTitle(name);
     surface.setLocation(initWindowLocationX,initWindowLocationY);
     frameRate(25);
-    cp5 = new ControlP5(this);
+    controlP5 = new ControlP5(this);
     
     //UI sizes
     int marginX = 10;
@@ -56,118 +56,119 @@ public class ControlFrame extends PApplet
     int sliderWidth = 90 + 90 + 25;
     
     //Color styles 
-    cp5.setColorForeground(Colors.ACCENT_800);
-    cp5.setColorBackground(Colors.BG_800);
-    cp5.setColorActive(Colors.ACCENT_700);
+    controlP5.setColorForeground(Colors.ACCENT_800);
+    controlP5.setColorBackground(Colors.BG_800);
+    controlP5.setColorActive(Colors.ACCENT_700);
     
     //Components
-    chooseButton = 
-    cp5.addButton("choose")
+    openImageBtn = 
+    controlP5.addButton("openImageBtn")
     .setPosition(marginX,20)
     .setSize(groupWidth,largeButtonSize[1]+10)
-    .plugTo(parent,"choose")
+    .plugTo(parent,"openImage")
     .setLabel("Choose an image...")
     .linebreak()
     ;
+
+    loadPtsBtn =  
+    controlP5.addButton("loadPtsBtn")
+    .setPosition(marginX,openImageBtn.getPosition()[1] + openImageBtn.getHeight() + 10)
+    .setSize(groupWidth,largeButtonSize[1]+10)
+    .plugTo(parent,"loadPts")
+    .setLabel("Load points");
   
-    Group g2 = 
-    cp5.addGroup("g2")
-    .setPosition(marginX,chooseButton.getPosition()[1] + chooseButton.getHeight() + 30)
-    .setLabel("Point generation")
+    Group generationGroup = 
+    controlP5.addGroup("generationGroup")
+    .setPosition(marginX,loadPtsBtn.getPosition()[1] + loadPtsBtn.getHeight() + 30)
+    .setLabel("Generate points")
     .setBackgroundColor(Colors.BG_950)
     .setSize(groupWidth,130)
     .disableCollapse()
     ;
     
-    cWSlider = 
-    cp5.addSlider("contWeight")
+    edgeWeightSlider = 
+    controlP5.addSlider("edgeWeightSlider")
     .setPosition(groupInsetX,10)
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,25)
     .setValue(1)
     .setLabel("Edge weight")
-    .plugTo(parent,"contWeight")
-    .setGroup(g2)
+    .plugTo(parent,"setEdgeWeight")
+    .setGroup(generationGroup)
     ;
     
-    cThSlider = 
-    cp5.addSlider("contThreshold")
+    edgeThresholdSlider = 
+    controlP5.addSlider("edgeThresholdSlider")
     .setPosition(groupInsetX,40)
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,254)
     .setValue(80)
     .setLabel("Edge threshold")
-    .plugTo(parent,"contThreshold")
-    .setGroup(g2)
+    .plugTo(parent,"setEdgeThreshold")
+    .setGroup(generationGroup)
     ;
     
-    cPSlider = 
-    cp5.addSlider("contourPointsN")
+    edgePtsSlider = 
+    controlP5.addSlider("edgePtsSlider")
     .setPosition(groupInsetX,70)
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,500)
     .setValue(0)
     .setLabel("# of edge points")
-    .plugTo(parent,"contourPointsN")
-    .setGroup(g2)
+    .plugTo(parent,"setEdgePts")
+    .setGroup(generationGroup)
     ;
   
-    nCPSlider = 
-    cp5.addSlider("randomPointsN")
+    randomPtsSlider = 
+    controlP5.addSlider("randomPtsSlider")
     .setPosition(groupInsetX,100)
     .setSize(sliderWidth,largeButtonSize[1])
     .setRange(0,500)
     .setValue(0)
     .setLabel("# of random points")
-    .plugTo(parent,"randomPointsN")
-    .setGroup(g2)
+    .plugTo(parent,"setRandomPts")
+    .setGroup(generationGroup)
     ;
   
-    Group g3 = 
-    cp5.addGroup("g3")
-    .setPosition(marginX,g2.getPosition()[1] + g2.getBackgroundHeight() + 30)
-    .setLabel("Point control")
+    Group eraserGroup = 
+    controlP5.addGroup("eraserGroup")
+    .setPosition(marginX,generationGroup.getPosition()[1] + generationGroup.getBackgroundHeight() + 30)
+    .setLabel("Eraser")
     .setBackgroundColor(Colors.BG_950)
-    .setSize(groupWidth,60)
+    .setSize(groupWidth,88)
     .disableCollapse()
     ;
-    
-    sPButton = 
-    cp5.addButton("sPoints")
+  
+    eraserToggle =
+    controlP5.addToggle("eraserToggle")
+    .plugTo(parent,"toggleEraser")
     .setPosition(groupInsetX,groupInsetX)
     .setSize(90,largeButtonSize[1])
-    .plugTo(parent,"sPoints")
-    .setLabel("Save points")
-    .setGroup(g3)
-    ;
-    
-    lPButton =  
-    cp5.addButton("lPoints")
-    .setPosition(sPButton.getPosition()[0] + sPButton.getWidth() + 15,groupInsetX)
-    .setSize(90,largeButtonSize[1])
-    .plugTo(parent,"lPoints")
-    .setLabel("Load points")
-    .setGroup(g3)
-    ;
-  
-    e = cp5.addToggle("eraser")
-    .plugTo(parent,"eraser")
-    .setPosition(lPButton.getPosition()[0] + lPButton.getWidth() + 15,groupInsetX)
-    .setSize(90,largeButtonSize[1])
     .setLabel("On/off eraser (e)")
-    .setGroup(g3)
+    .setGroup(eraserGroup)
+    ;
+
+    eraserSizeSlider = 
+    controlP5.addSlider("eraserSizeSlider")
+    .setPosition(groupInsetX,eraserToggle.getPosition()[1] + eraserToggle.getHeight() + 15 + 10)
+    .setSize(sliderWidth,largeButtonSize[1])
+    .setRange(minEraserSize,maxEraserSize)
+    .setValue(eraserSize)
+    .setLabel("Eraser size ([, ])")
+    .plugTo(parent,"setEraserSize")
+    .setGroup(eraserGroup)
     ;
   
-    Group g4 = 
-    cp5.addGroup("g4")
-    .setPosition(marginX,g3.getPosition()[1] + g3.getBackgroundHeight() + 30)
-    .setLabel("Display options")
+    Group displayGroup = 
+    controlP5.addGroup("displayGroup")
+    .setPosition(marginX,eraserGroup.getPosition()[1] + eraserGroup.getBackgroundHeight() + 30)
+    .setLabel("Display mode")
     .setBackgroundColor(Colors.BG_950)
     .setSize(groupWidth,70)
     .disableCollapse()
     ;
    
-    r = cp5.addRadioButton("passChooser")
+    modeRadio = controlP5.addRadioButton("modeRadio")
     .setPosition(groupInsetX,10)
     .setSize(20,largeButtonSize[1])
     .setItemsPerRow(3)
@@ -178,45 +179,37 @@ public class ControlFrame extends PApplet
     .addItem("Contour (c)",Pass.CONTOUR)
     .addItem("Result (r)",Pass.RESULT)
     .activate(Pass.MESH)
-    .plugTo(parent,"passChooser")
-    .setGroup(g4)
+    .plugTo(parent,"setMode")
+    .setGroup(displayGroup)
     ;
-
-    //Needs work
-    /*TransSlider = 
-    cp5.addSlider("randomPointsN")
-    .setPosition(groupInsetX,100)
-    .setSize(sliderWidth,largeButtonSize[1])
-    .setRange(0,255)
-    .setValue(255)
-    .setLabel("Triangle2D Transparency")
-    .plugTo(parent,"randomPointsN")
-    .setGroup(g4)
-    ;*/ 
-
   
-    Button sP = 
-    cp5.addButton("savePDF")
-    .setPosition(marginX,g4.getPosition()[1] + g4.getBackgroundHeight() + 10)
+    Button savePDFBtn = 
+    controlP5.addButton("savePDFBtn")
+    .setPosition(marginX,displayGroup.getPosition()[1] + displayGroup.getBackgroundHeight() + 10)
     .setSize(groupWidth,largeButtonSize[1])
     .setLabel("Export to PDF")
     .plugTo(parent,"savePDF")
     ;
        
-    Button sO = 
-    cp5.addButton("saveOBJ")
-    .setPosition(marginX,sP.getPosition()[1] + sP.getHeight() + 10)
+    Button saveOBJBtn = 
+    controlP5.addButton("saveOBJBtn")
+    .setPosition(marginX,savePDFBtn.getPosition()[1] + savePDFBtn.getHeight() + 10)
     .setSize(groupWidth,largeButtonSize[1])
     .setLabel("Export to OBJ")
     .plugTo(parent,"saveOBJ")
     ;
-       
-     // cp5.addSlider("abc").setRange(0, 255).setPosition(10,10);
-     // cp5.addSlider("def").plugTo(parent,"def").setRange(0, 255).setPosition(10,30);
+
+    savePtsBtn = 
+    controlP5.addButton("savePtsBtn")
+    .setPosition(marginX,saveOBJBtn.getPosition()[1] + saveOBJBtn.getHeight() + 10)
+    .setSize(groupWidth,largeButtonSize[1])
+    .plugTo(parent,"savePts")
+    .setLabel("Save points")
+    ;
      
-    ta = 
-    cp5.addTextarea("txt")
-    .setPosition(marginX,sO.getPosition()[1] + 30)
+    messageArea = 
+    controlP5.addTextarea("messageArea")
+    .setPosition(marginX,savePtsBtn.getPosition()[1] + 30)
     .setSize(groupWidth,60)
     .setLineHeight(14)
     .setColor(Colors.ON_BG)
@@ -234,7 +227,7 @@ public class ControlFrame extends PApplet
 
   public ControlP5 control() 
   {
-    return cp5;
+    return controlP5;
   }
 
   void keyPressed() 
@@ -267,46 +260,46 @@ public class ControlFrame extends PApplet
     if (key == 'o' || key == 'O') 
     {
       displayType = Pass.IMAGE;
-      r.activate(Pass.IMAGE);
+      modeRadio.activate(Pass.IMAGE);
     }
   
     if (key == 'r' || key == 'R') 
     {
       displayType = Pass.RESULT;
-      r.activate(Pass.RESULT);
+      modeRadio.activate(Pass.RESULT);
     }
   
     if (key == 'm' || key == 'M') 
     {
       displayType = Pass.MESH;
-      r.activate(Pass.MESH);
+      modeRadio.activate(Pass.MESH);
     }
    
     if (key == 'c' || key == 'C') 
     {
       displayType = Pass.CONTOUR;
-      r.activate(Pass.CONTOUR);
+      modeRadio.activate(Pass.CONTOUR);
     }
   
     if (key == 'e' || key == 'E') 
     {
       if (deleteMode == true) 
       {
-        e.setState(false);
+        eraserToggle.setState(false);
       }
       else if (deleteMode == false) 
       {
-        e.setState(true);
+        eraserToggle.setState(true);
       }
     }
      if ((key == '}' || key == ']') && (eraserSize != maxEraserSize))
     {
-      eraserSize = eraserSize+1;  
+      eraserSize = eraserSize + 1;  
     }
     
     if ((key == '{' || key == '[') && (eraserSize != minEraserSize))
     {
-      eraserSize = eraserSize-1;
+      eraserSize = eraserSize - 1;
     }
   }
 }

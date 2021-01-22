@@ -51,36 +51,36 @@ void keyPressed()
   if (key == 'o' || key == 'O') 
   {
     displayType = Pass.IMAGE;
-    r.activate(Pass.IMAGE);
+    modeRadio.activate(Pass.IMAGE);
   }
 
   if (key == 'r' || key == 'R') 
   {
     displayType = Pass.RESULT;
-    r.activate(Pass.RESULT);
+    modeRadio.activate(Pass.RESULT);
   }
 
   if (key == 'm' || key == 'M') 
   {
     displayType = Pass.MESH;
-    r.activate(Pass.MESH);
+    modeRadio.activate(Pass.MESH);
   }
  
   if (key == 'c' || key == 'C') 
   {
     displayType = Pass.CONTOUR;
-    r.activate(Pass.CONTOUR);
+    modeRadio.activate(Pass.CONTOUR);
   }
 
   if (key == 'e' || key == 'E') 
   {
     if (deleteMode == true) 
     {
-      e.setState(false);
+      eraserToggle.setState(false);
     }
     else if (deleteMode == false) 
     {  
-      e.setState(true);
+      eraserToggle.setState(true);
     }
   }
    if ((key == '}' || key == ']') && (eraserSize != maxEraserSize))
@@ -92,7 +92,4 @@ void keyPressed()
   {
     eraserSize = eraserSize-1;
   }
-  
-  //println(keyCode);
-  //println(key);
 }
