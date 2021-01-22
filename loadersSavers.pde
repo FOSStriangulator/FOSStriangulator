@@ -55,7 +55,7 @@ void pdfFileSave(File selection)
     messageArea.setColor(Colors.SUCCESS);
     messageArea.setText("Success!\nYour file has been saved!");
   }
-}// pdfFileSave
+}
 
 void objFileSave(File selection)
 {

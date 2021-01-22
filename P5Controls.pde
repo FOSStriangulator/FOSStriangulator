@@ -66,7 +66,7 @@ public class ControlFrame extends PApplet
     .setPosition(marginX,20)
     .setSize(groupWidth,largeButtonSize[1]+10)
     .plugTo(parent,"openImage")
-    .setLabel("Choose an image...")
+    .setLabel("Choose an image")
     .linebreak()
     ;
 
