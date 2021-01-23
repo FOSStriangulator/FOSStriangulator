@@ -40,7 +40,7 @@ boolean insideFrame;
 int maxEraserSize = 80;
 int minEraserSize = 1;
 float eraserSize = 5.0;
-PImage img, img_b, img_c, processingTextImg, icon;
+PImage img, img_b, img_c, icon;
 
 //Control varialbles
 private ControlP5 controlP5;
@@ -81,13 +81,11 @@ void setup()
 {
   zoom=1.0;
   img = loadImage("Instructions.png");
-  processingTextImg = loadImage("processing.png");
   icon = loadImage("icon.png");
 
   /*
   For flatpaks, use:
 	img = loadImage("/app/share/Instructions.png");
-  processingTextImg = loadImage("/app/share/processing.png");
   icon = loadImage("/app/share/icon.png");
   */
 
