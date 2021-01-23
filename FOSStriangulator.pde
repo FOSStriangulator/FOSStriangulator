@@ -268,6 +268,7 @@ void draw()
   
 }
 
+// key presses within main window
 void keyPressed() 
 {
   globalKeyPressed(key);

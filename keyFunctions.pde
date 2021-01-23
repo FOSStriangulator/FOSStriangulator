@@ -14,58 +14,51 @@
 // You should have received a copy of the GNU General Public License
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
-/////////////////////////////////////////
-//        KEY FUNCTIONS                //
-/////////////////////////////////////////
-
 void globalKeyPressed(char key) {
-  if (key == 's' || key == 'S') 
-  {
-    savePdfToFile("output.pdf");
+  switch (key) {
+    case 's':
+    case 'S':
+      savePdfToFile("output.pdf");
+      break;
+    case 'p':
+    case 'P':
+      displayType = Mode.POINTS;
+      modeRadio.activate(Mode.POINTS);
+      break;
+    case 'r':
+    case 'R':
+      displayType = Mode.RESULT;
+      modeRadio.activate(Mode.RESULT);
+      break;
+    case 'm':
+    case 'M':
+      displayType = Mode.MESH;
+      modeRadio.activate(Mode.MESH);
+      break;
+    case 'c':
+    case 'C':
+      displayType = Mode.CONTOUR;
+      modeRadio.activate(Mode.CONTOUR);
+      break;
+    case 'e':
+    case 'E':
+      if (deleteMode) 
+        eraserToggle.setState(false);
+      else  
+        eraserToggle.setState(true);
+      break;
+    case '[':
+    case '{':
+      if (eraserSize > minEraserSize)
+        eraserSize--;
+      break;
+    case ']':
+    case '}':
+      if (eraserSize < maxEraserSize)
+        eraserSize++;
+      break;
+    default:
+      return;
   }
-
-  if (key == 'p' || key == 'P') 
-  {
-    displayType = Mode.POINTS;
-    modeRadio.activate(Mode.POINTS);
-  }
-
-  if (key == 'r' || key == 'R') 
-  {
-    displayType = Mode.RESULT;
-    modeRadio.activate(Mode.RESULT);
-  }
-
-  if (key == 'm' || key == 'M') 
-  {
-    displayType = Mode.MESH;
-    modeRadio.activate(Mode.MESH);
-  }
- 
-  if (key == 'c' || key == 'C') 
-  {
-    displayType = Mode.CONTOUR;
-    modeRadio.activate(Mode.CONTOUR);
-  }
-
-  if (key == 'e' || key == 'E') 
-  {
-    if (deleteMode == true) 
-    {
-      eraserToggle.setState(false);
-    }
-    else if (deleteMode == false) 
-    {  
-      eraserToggle.setState(true);
-    }
-  }
-   if ((key == '}' || key == ']') && (eraserSize != maxEraserSize))
-  {
-    eraserSize = eraserSize+1;  
-  }
-  
-  if ((key == '{' || key == '[') && (eraserSize != minEraserSize))
-  {
-    eraserSize = eraserSize-1;
-  }
+  redraw();
 }

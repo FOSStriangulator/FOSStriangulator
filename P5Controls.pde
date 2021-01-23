@@ -230,7 +230,8 @@ public class ControlFrame extends PApplet
     return controlP5;
   }
 
-  void keyPressed() 
+  // key presses within control panel
+  void keyPressed()
   {
     globalKeyPressed(key);
   }
