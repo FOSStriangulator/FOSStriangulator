@@ -70,8 +70,8 @@ public void setEdgeWeight (int _value)
   contourImgPoints = getThresholdPixels (img_c, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
-  displayType = Pass.CONTOUR;
-  modeRadio.activate(Pass.CONTOUR);
+  displayType = Mode.CONTOUR;
+  modeRadio.activate(Mode.CONTOUR);
 }
 
 public void setEdgeThreshold (int _value) 
@@ -81,35 +81,35 @@ public void setEdgeThreshold (int _value)
   contourImgPoints = getThresholdPixels (img_c, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
-  displayType = Pass.CONTOUR;  
-  modeRadio.activate(Pass.CONTOUR);
+  displayType = Mode.CONTOUR;  
+  modeRadio.activate(Mode.CONTOUR);
 }
 
 public void setMode(int mode) 
 { 
-  if (mode==Pass.IMAGE)
+  if (mode==Mode.POINTS)
   {
-    displayType = Pass.IMAGE;
-    modeRadio.activate(Pass.IMAGE);
+    displayType = Mode.POINTS;
+    modeRadio.activate(Mode.POINTS);
   }  
 
-  if (mode==Pass.MESH)
+  if (mode==Mode.MESH)
   {
     refreshBuffer = true;
-    displayType = Pass.MESH;
-    modeRadio.activate(Pass.MESH);
+    displayType = Mode.MESH;
+    modeRadio.activate(Mode.MESH);
   }
 
-  if (mode==Pass.RESULT)
+  if (mode==Mode.RESULT)
   {
     refreshBuffer = true;
-    displayType = Pass.RESULT;
-    modeRadio.activate(Pass.RESULT);
+    displayType = Mode.RESULT;
+    modeRadio.activate(Mode.RESULT);
   }
-  if (mode==Pass.CONTOUR)
+  if (mode==Mode.CONTOUR)
   {
-    displayType = Pass.CONTOUR;
-    modeRadio.activate(Pass.CONTOUR);
+    displayType = Mode.CONTOUR;
+    modeRadio.activate(Mode.CONTOUR);
   }
 }
 

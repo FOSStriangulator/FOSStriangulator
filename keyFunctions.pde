@@ -26,26 +26,26 @@ void globalKeyPressed(char key) {
 
   if (key == 'p' || key == 'P') 
   {
-    displayType = Pass.IMAGE;
-    modeRadio.activate(Pass.IMAGE);
+    displayType = Mode.POINTS;
+    modeRadio.activate(Mode.POINTS);
   }
 
   if (key == 'r' || key == 'R') 
   {
-    displayType = Pass.RESULT;
-    modeRadio.activate(Pass.RESULT);
+    displayType = Mode.RESULT;
+    modeRadio.activate(Mode.RESULT);
   }
 
   if (key == 'm' || key == 'M') 
   {
-    displayType = Pass.MESH;
-    modeRadio.activate(Pass.MESH);
+    displayType = Mode.MESH;
+    modeRadio.activate(Mode.MESH);
   }
  
   if (key == 'c' || key == 'C') 
   {
-    displayType = Pass.CONTOUR;
-    modeRadio.activate(Pass.CONTOUR);
+    displayType = Mode.CONTOUR;
+    modeRadio.activate(Mode.CONTOUR);
   }
 
   if (key == 'e' || key == 'E') 

@@ -30,7 +30,7 @@ import java.util.Iterator;
 
 
 public int blur_val = 0;
-public int displayType = Pass.MESH;
+public int displayType = Mode.MESH;
 public boolean deleteMode = false;
 public boolean panMode = false;
 boolean refreshBuffer = true;
@@ -135,7 +135,7 @@ void draw()
   
     switch(displayType)
     {
-      case Pass.IMAGE:
+      case Mode.POINTS:
       {
         image(img, 0, 0);
         noStroke();
@@ -156,7 +156,7 @@ void draw()
         break;
       }
       
-      case Pass.CONTOUR:
+      case Mode.CONTOUR:
       {
         image(img_c, 0, 0);
         noStroke();
@@ -171,7 +171,7 @@ void draw()
         break;
       }
       
-      case Pass.MESH:
+      case Mode.MESH:
       {
         image(img, 0, 0);
         
@@ -199,7 +199,7 @@ void draw()
         break;
       }
   
-    	case Pass.RESULT:
+    	case Mode.RESULT:
     	{
     		image(img_b, 0, 0);
     		noStroke();

@@ -301,8 +301,8 @@ void imageFileSelect(File selection)
         
         edgeWeightSlider.setValue(1);
         edgeThresholdSlider.setValue(80);
-        displayType = Pass.MESH;
-        modeRadio.activate(Pass.MESH);
+        displayType = Mode.MESH;
+        modeRadio.activate(Mode.MESH);
         randomPtsSlider.setValue(0);
         edgePtsSlider.setValue(0);
 

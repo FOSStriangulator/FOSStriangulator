@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
-interface Pass {
+interface Mode {
   int
-  IMAGE = 0, 
+  POINTS = 0, 
   MESH = 1, 
   CONTOUR = 2, 
   RESULT = 3;
