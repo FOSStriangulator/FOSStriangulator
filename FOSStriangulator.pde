@@ -65,7 +65,6 @@ float mappedMouseX,mappedMouseY;
 
 //text file writer
 PrintWriter output;
-PGraphics pdf;
 
 //Triangulate points and objects 
 ArrayList<PVector> contourPointsList = new ArrayList<PVector>();
@@ -267,6 +266,11 @@ void draw()
     refreshBuffer = false;
   }
   
+}
+
+void keyPressed() 
+{
+  globalKeyPressed(key);
 }
 
 

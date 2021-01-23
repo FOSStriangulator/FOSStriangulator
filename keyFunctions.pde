@@ -18,34 +18,10 @@
 //        KEY FUNCTIONS                //
 /////////////////////////////////////////
 
-
-void keyPressed() 
-{
+void globalKeyPressed(char key) {
   if (key == 's' || key == 'S') 
   {
-    PGraphics pdf = createGraphics(img.width, img.height, PDF, "output.pdf");
-    pdf.beginDraw();
-    pdf.noStroke();   
-    pdf.image(img, 0, 0);
-    
-    LinkedHashSet<PVector> pointsDisplay = new LinkedHashSet<PVector>();   
-    pointsDisplay = (LinkedHashSet)points.clone(); 
-    triangles = new DelaunayTriangulator(pointsDisplay).triangulate();
-    
-    for (int i = 0; i < triangles.size(); i++) 
-    {
-      Triangle2D t = (Triangle2D)triangles.get(i);
-
-      int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
-      int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
-
-      pdf.fill( img_b.get(ave_x, ave_y));
-
-      pdf.triangle(t.a.x, t.a.y, t.b.x, t.b.y, t.c.x, t.c.y);
-    }
-    pdf.dispose();
-    pdf.endDraw();
-    save("output.png");
+    savePdfToFile("output.pdf");
   }
 
   if (key == 'o' || key == 'O') 

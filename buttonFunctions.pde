@@ -85,28 +85,28 @@ public void setEdgeThreshold (int _value)
   modeRadio.activate(Pass.CONTOUR);
 }
 
-public void setMode(int a) 
+public void setMode(int mode) 
 { 
-  if (a==Pass.IMAGE)
+  if (mode==Pass.IMAGE)
   {
     displayType = Pass.IMAGE;
     modeRadio.activate(Pass.IMAGE);
   }  
 
-  if (a==Pass.MESH)
+  if (mode==Pass.MESH)
   {
     refreshBuffer = true;
     displayType = Pass.MESH;
     modeRadio.activate(Pass.MESH);
   }
 
-  if (a==Pass.RESULT)
+  if (mode==Pass.RESULT)
   {
     refreshBuffer = true;
     displayType = Pass.RESULT;
     modeRadio.activate(Pass.RESULT);
   }
-  if (a==Pass.CONTOUR)
+  if (mode==Pass.CONTOUR)
   {
     displayType = Pass.CONTOUR;
     modeRadio.activate(Pass.CONTOUR);
