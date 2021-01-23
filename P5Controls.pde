@@ -174,7 +174,7 @@ public class ControlFrame extends PApplet
     .setItemsPerRow(3)
     .setSpacingColumn(90)
     .setSpacingRow(10)
-    .addItem("Original (o)",Pass.IMAGE)
+    .addItem("Points (p)",Pass.IMAGE)
     .addItem("Mesh (m)",Pass.MESH)
     .addItem("Contour (c)",Pass.CONTOUR)
     .addItem("Result (r)",Pass.RESULT)

@@ -24,7 +24,7 @@ void globalKeyPressed(char key) {
     savePdfToFile("output.pdf");
   }
 
-  if (key == 'o' || key == 'O') 
+  if (key == 'p' || key == 'P') 
   {
     displayType = Pass.IMAGE;
     modeRadio.activate(Pass.IMAGE);
