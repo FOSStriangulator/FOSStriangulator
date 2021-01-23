@@ -90,7 +90,7 @@ void setup()
   */
 
 	img_b = img.get();
-	img_c = countourImage(img_b, 1,80);
+	img_c = contourImage(img_b, 1,80);
 
   surface.setResizable(true);
 	surface.setSize(img.width, img.height);
@@ -268,7 +268,7 @@ void keyPressed()
 
 
 //create a contour image from img , using weight v, and threshold
-PImage countourImage (PImage img, int v, int threshold)
+PImage contourImage (PImage img, int v, int threshold)
 {
 	int[] AllImgPixels;
 

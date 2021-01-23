@@ -269,7 +269,7 @@ void imageFileSelect(File selection)
         
         //println(selection.getAbsolutePath());
         img_b = img.get();
-        img_c = countourImage(img_b, 1, 80);
+        img_c = contourImage(img_b, 1, 80);
         // size the window and show the image 
 
         surface.setSize(img.width, img.height);
