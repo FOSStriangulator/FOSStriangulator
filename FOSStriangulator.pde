@@ -28,8 +28,6 @@ import controlP5.*;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-
-public int blur_val = 0;
 public int displayType = Mode.MESH;
 public boolean deleteMode = false;
 public boolean panMode = false;
@@ -41,7 +39,6 @@ boolean insideFrame;
 //Graphic UI varialbles
 int maxEraserSize = 80;
 int minEraserSize = 1;
-boolean displayBlurMessage = false;
 float eraserSize = 5.0;
 PImage img, img_b, img_c, processingTextImg, icon;
 
@@ -151,8 +148,6 @@ void draw()
         //  ellipse((points.get(i)).x, (points.get(i)).y, 2, 2);
         //}
         
-        if (displayBlurMessage == true)  {drawBlurMessage();}
-        
         break;
       }
       
@@ -165,8 +160,6 @@ void draw()
         {
           ellipse(temp.x, temp.y, 2, 2);
         }
-        
-        if (displayBlurMessage == true)  {drawBlurMessage();}
         
         break;
       }
@@ -194,7 +187,6 @@ void draw()
         }
         endShape();
         if (refreshBufferOnce == true){refreshBuffer = false;}
-        if (displayBlurMessage == true)  {drawBlurMessage();}
         
         break;
       }
@@ -243,8 +235,7 @@ void draw()
           //}
     		}
     		endShape();
-        if (refreshBufferOnce == true){refreshBuffer = false;}       
-        if (displayBlurMessage == true)  {drawBlurMessage();}
+        if (refreshBufferOnce == true){refreshBuffer = false;}
         break;
     	}
     
@@ -252,8 +243,6 @@ void draw()
       {
         image(img, 0, 0);
         noStroke();
-        
-        if (displayBlurMessage == true)  {drawBlurMessage();}
         
         break;
       }
