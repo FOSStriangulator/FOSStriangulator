@@ -40,7 +40,7 @@ boolean insideFrame;
 int maxEraserSize = 80;
 int minEraserSize = 1;
 float eraserSize = 5.0;
-PImage img, img_b, img_c, icon;
+PImage img, img_b, imgContour, icon;
 
 //Control varialbles
 private ControlP5 controlP5;
@@ -90,7 +90,7 @@ void setup()
   */
 
 	img_b = img.get();
-	img_c = contourImage(img_b, 1,80);
+	imgContour = contourImage(img_b, 1,80);
 
   surface.setResizable(true);
 	surface.setSize(img.width, img.height);
@@ -108,7 +108,7 @@ void setup()
   userPointsHash.addAll(points);
   pointsDisplay.addAll(points); 	
 	
-  contourImgPoints = getThresholdPixels (img_c, true);
+  contourImgPoints = getThresholdPixels (imgContour, true);
 	nonContourPoints = contourImgPoints.get(0);
 	contourPoints = contourImgPoints.get(1);
 
@@ -151,7 +151,7 @@ void draw()
       
       case Mode.CONTOUR:
       {
-        image(img_c, 0, 0);
+        image(imgContour, 0, 0);
         noStroke();
         fill(255, 0, 0);
         for (PVector temp : pointsDisplay)

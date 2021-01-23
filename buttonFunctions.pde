@@ -66,8 +66,8 @@ public void saveOBJ()
 public void setEdgeWeight (int _value) 
 {
   if (deleteMode == true){refreshBuffer = true;}
-  img_c = contourImage(img_b, _value, (int)edgeThresholdSlider.getValue());
-  contourImgPoints = getThresholdPixels (img_c, true);
+  imgContour = contourImage(img_b, _value, (int)edgeThresholdSlider.getValue());
+  contourImgPoints = getThresholdPixels (imgContour, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
   displayType = Mode.CONTOUR;
@@ -77,8 +77,8 @@ public void setEdgeWeight (int _value)
 public void setEdgeThreshold (int _value) 
 {
   if (deleteMode == true){refreshBuffer = true;}
-  img_c = contourImage(img_b, (int)edgeWeightSlider.getValue(),_value);
-  contourImgPoints = getThresholdPixels (img_c, true);
+  imgContour = contourImage(img_b, (int)edgeWeightSlider.getValue(),_value);
+  contourImgPoints = getThresholdPixels (imgContour, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
   displayType = Mode.CONTOUR;  

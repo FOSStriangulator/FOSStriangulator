@@ -269,7 +269,7 @@ void imageFileSelect(File selection)
         
         //println(selection.getAbsolutePath());
         img_b = img.get();
-        img_c = contourImage(img_b, 1, 80);
+        imgContour = contourImage(img_b, 1, 80);
         // size the window and show the image 
 
         surface.setSize(img.width, img.height);
@@ -295,7 +295,7 @@ void imageFileSelect(File selection)
         userPointsHash.addAll(points);
         pointsDisplay.addAll(points);
         
-        contourImgPoints = getThresholdPixels (img_c, true);
+        contourImgPoints = getThresholdPixels (imgContour, true);
         nonContourPoints = contourImgPoints.get(0);
         contourPoints = contourImgPoints.get(1);
         
