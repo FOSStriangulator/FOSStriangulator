@@ -14,10 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
-/////////////////////////////////////////
-//        BUTTON FUNCTIONS             //
-/////////////////////////////////////////
-
 public void toggleEraser(boolean eraserOn) 
 {
   //println("delete flag set");
@@ -55,12 +51,17 @@ public void savePts()
 
 public void savePDF()
 {
-  selectOutput("Save as a pdf:", "pdfFileSave");
+  selectOutput("Save as PDF:", "pdfFileSave");
+}
+
+public void saveSVG()
+{
+  selectOutput("Save as SVG:", "svgFileSave");
 }
 
 public void saveOBJ()
 {
-  selectOutput("Save as a obj:", "objFileSave");
+  selectOutput("Save as OBJ:", "objFileSave");
 }
 
 public void setEdgeWeight (int _value) 

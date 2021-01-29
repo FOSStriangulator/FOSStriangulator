@@ -24,6 +24,7 @@ interpolate edge colour
 
 import java.util.LinkedHashSet;
 import processing.pdf.*;
+import processing.svg.*;
 import controlP5.*;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;

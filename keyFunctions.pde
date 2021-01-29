@@ -18,7 +18,7 @@ void globalKeyPressed(char key) {
   switch (key) {
     case 's':
     case 'S':
-      savePdfToFile("output.pdf");
+      saveSvgPdf("output.pdf", PDF);
       break;
     case 'p':
     case 'P':

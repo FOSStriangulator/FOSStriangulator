@@ -182,10 +182,18 @@ public class ControlFrame extends PApplet
     .plugTo(parent,"setMode")
     .setGroup(displayGroup)
     ;
-  
+
+    Button saveSVGBtn = 
+    controlP5.addButton("saveSVGBtn")
+    .setPosition(marginX,displayGroup.getPosition()[1] + displayGroup.getBackgroundHeight() + 10)
+    .setSize(groupWidth,largeButtonSize[1])
+    .setLabel("Export to SVG")
+    .plugTo(parent,"saveSVG")
+    ;
+
     Button savePDFBtn = 
     controlP5.addButton("savePDFBtn")
-    .setPosition(marginX,displayGroup.getPosition()[1] + displayGroup.getBackgroundHeight() + 10)
+    .setPosition(marginX,saveSVGBtn.getPosition()[1] + saveSVGBtn.getHeight() + 10)
     .setSize(groupWidth,largeButtonSize[1])
     .setLabel("Export to PDF")
     .plugTo(parent,"savePDF")

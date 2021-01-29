@@ -25,20 +25,38 @@ void pdfFileSave(File selection)
   {
     if (selection.getName().endsWith(".pdf"))
     {
-      savePdfToFile(selection.getAbsolutePath());
+      saveSvgPdf(selection.getAbsolutePath(), PDF);
     }
     else
     {
-      savePdfToFile(selection.getAbsolutePath()+".pdf");
+      saveSvgPdf(selection.getAbsolutePath()+".pdf", PDF);
     }
   }
 }
 
-void savePdfToFile(String path) {
-  PGraphics pdf = createGraphics(img.width, img.height, PDF, path);
-  pdf.beginDraw();
-  pdf.noStroke();   
-  pdf.image(img, 0, 0);
+void svgFileSave(File selection)
+{
+  if (selection == null) 
+  {
+    messageArea.setColor(Colors.ON_BG);
+    messageArea.setText("Status:\nNothing selected, no file saved.");
+  } 
+  else
+  {
+    if (selection.getName().endsWith(".svg"))
+      saveSvgPdf(selection.getAbsolutePath(), SVG);
+    else
+      saveSvgPdf(selection.getAbsolutePath()+".svg", SVG);
+  }
+}
+
+void saveSvgPdf(String path, String renderer) {
+  PGraphics pgraphics = createGraphics(img.width, img.height, renderer, path);
+  pgraphics.beginDraw();
+  pgraphics.noStroke();
+
+  if (renderer == PDF)
+    pgraphics.image(img, 0, 0);
   
   LinkedHashSet<PVector> pointsDisplay = new LinkedHashSet<PVector>();  
   pointsDisplay = (LinkedHashSet)points.clone(); 
@@ -50,14 +68,14 @@ void savePdfToFile(String path) {
 
     int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
     int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
-    pdf.fill( img_b.get(ave_x, ave_y));
-    pdf.triangle(t.a.x, t.a.y, t.b.x, t.b.y, t.c.x, t.c.y);
+    pgraphics.fill( img_b.get(ave_x, ave_y));
+    pgraphics.triangle(t.a.x, t.a.y, t.b.x, t.b.y, t.c.x, t.c.y);
   }
-  pdf.dispose();
-  pdf.endDraw();
+  pgraphics.dispose();
+  pgraphics.endDraw();
 
   messageArea.setColor(Colors.SUCCESS);
-  messageArea.setText("Success!\nYour file has been saved!");
+  messageArea.setText("Success!\nTriangulation has been exported!");
 }
 
 void objFileSave(File selection)
