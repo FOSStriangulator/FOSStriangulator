@@ -23,16 +23,14 @@ void mouseMoved()
   mappedMouseX = (mouseX/zoom - (xtrans-xzoom));
   mappedMouseY = (mouseY/zoom - (ytrans-yzoom));
   
-  if (deleteMode == false && panMode == false) // todo what does THIS do?
+  if (deleteMode == false && panMode == false)
   {
+    // preview on hover
     pointsDisplay = (LinkedHashSet)points.clone();   
     pointsDisplay.add(new PVector(mappedMouseX, mappedMouseY, 0));
   }
-  else if (deleteMode == true && panMode == false)
-  {
-    
-  }
 }
+
 void mouseDragged()
 {
   if (mouseButton == CENTER)

@@ -22,3 +22,70 @@ void drawEraserCursor ()
    ellipse(mappedMouseX, mappedMouseY, eraserSize*2.0,eraserSize*2.0);
    //ellipse(mouseX, mouseY, eraserSize*2.0,eraserSize*2.0);
 }
+
+void drawPoints (int colorInt)
+{
+   noStroke();
+   fill(colorInt);
+   for (PVector temp : pointsDisplay)
+   {
+      ellipse(temp.x, temp.y, 2, 2);
+   }
+}
+
+void drawTriangleMesh ()
+{
+   noFill();
+   beginShape(TRIANGLES);
+   strokeJoin(BEVEL);
+   strokeWeight(0.7/zoom);
+   stroke(0, 0, 255);
+   for (int i = 0; i < triangles.size(); i++) 
+   {
+      Triangle2D t = (Triangle2D)triangles.get(i);
+
+      vertex(t.a.x, t.a.y);
+      vertex(t.b.x, t.b.y);
+      vertex(t.c.x, t.c.y);
+   }
+   endShape();
+}
+
+void drawTriangles ()
+{
+   noStroke();
+   beginShape(TRIANGLES);
+   for (int i = 0; i < triangles.size(); i++) 
+   {
+      Triangle2D t = (Triangle2D)triangles.get(i);
+      
+      int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
+      int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
+      
+      if (notInsideImage(ave_x,ave_y))
+      {
+         PVector imgEdgeIntersection = lineIntersectionBox(new PVector (ave_x,ave_y), new PVector (img.width/2,img.height/2), new PVector (1.0, 1.0), new PVector (img.width-1,img.height-1));
+         fill(img_b.get(floor(imgEdgeIntersection.x), floor(imgEdgeIntersection.y)), 255);
+      }
+      else
+      {
+         fill(img_b.get(ave_x, ave_y), 255);
+      }
+      vertex(t.a.x, t.a.y);
+      vertex(t.b.x, t.b.y);
+      vertex(t.c.x, t.c.y);
+      
+      //testing image intersection
+      //if (notInsideImage(ave_x,ave_y))
+      //{
+      //  fill(255,0,0);
+      //  stroke(255,0,0);
+      //  ellipse(ave_x,ave_y,5,5);
+      //  text( (str(ave_x) +" " + str(ave_y)) ,ave_x,ave_y);
+      //  line(ave_x,ave_y,img.width/2,img.height/2);
+      //  PVector imgEdgeIntersection = lineIntersectionBox(new PVector (ave_x,ave_y), new PVector (img.width/2,img.height/2), new PVector (0.0, 0.0), new PVector (img.width,img.height));
+      //  ellipse(imgEdgeIntersection.x,imgEdgeIntersection.y,5,5);
+      //}
+   }
+   endShape();
+}
