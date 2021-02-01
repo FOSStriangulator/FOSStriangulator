@@ -22,22 +22,22 @@ void globalKeyPressed(char key) {
       break;
     case 'p':
     case 'P':
-      displayType = Mode.POINTS;
+      displayMode = Mode.POINTS;
       modeRadio.activate(Mode.POINTS);
       break;
     case 'r':
     case 'R':
-      displayType = Mode.RESULT;
+      displayMode = Mode.RESULT;
       modeRadio.activate(Mode.RESULT);
       break;
     case 'm':
     case 'M':
-      displayType = Mode.MESH;
+      displayMode = Mode.MESH;
       modeRadio.activate(Mode.MESH);
       break;
     case 'c':
     case 'C':
-      displayType = Mode.CONTOUR;
+      displayMode = Mode.CONTOUR;
       modeRadio.activate(Mode.CONTOUR);
       break;
     case 'e':

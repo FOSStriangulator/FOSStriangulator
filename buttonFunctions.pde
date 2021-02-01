@@ -71,7 +71,7 @@ public void setEdgeWeight (int _value)
   contourImgPoints = getThresholdPixels (imgContour, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
-  displayType = Mode.CONTOUR;
+  displayMode = Mode.CONTOUR;
   modeRadio.activate(Mode.CONTOUR);
 }
 
@@ -82,36 +82,17 @@ public void setEdgeThreshold (int _value)
   contourImgPoints = getThresholdPixels (imgContour, true);
   nonContourPoints = contourImgPoints.get(0);
   contourPoints = contourImgPoints.get(1);
-  displayType = Mode.CONTOUR;  
+  displayMode = Mode.CONTOUR;  
   modeRadio.activate(Mode.CONTOUR);
 }
 
 public void setMode(int mode) 
 { 
-  if (mode==Mode.POINTS)
-  {
-    displayType = Mode.POINTS;
-    modeRadio.activate(Mode.POINTS);
-  }  
+  displayMode = mode;
+  modeRadio.activate(mode);
 
-  if (mode==Mode.MESH)
-  {
+  if (mode == Mode.MESH || mode == Mode.RESULT)
     refreshBuffer = true;
-    displayType = Mode.MESH;
-    modeRadio.activate(Mode.MESH);
-  }
-
-  if (mode==Mode.RESULT)
-  {
-    refreshBuffer = true;
-    displayType = Mode.RESULT;
-    modeRadio.activate(Mode.RESULT);
-  }
-  if (mode==Mode.CONTOUR)
-  {
-    displayType = Mode.CONTOUR;
-    modeRadio.activate(Mode.CONTOUR);
-  }
 }
 
 //need to resolve this - currently uses the old pvector list need to convert everything to hashset

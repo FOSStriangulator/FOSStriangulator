@@ -29,13 +29,11 @@ import controlP5.*;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-public int displayType = Mode.MESH;
+public int displayMode = Mode.MESH;
 public boolean deleteMode = false;
 public boolean panMode = false;
 boolean refreshBuffer = true;
 boolean refreshBufferOnce = false;
-
-boolean insideFrame;
 
 //Graphic UI varialbles
 int maxEraserSize = 80;
@@ -129,29 +127,19 @@ void draw()
   translate(xtrans-xzoom,ytrans-yzoom);
   background(128);
   
-    switch(displayType)
+    switch(displayMode)
     {
       case Mode.POINTS:
-      {
         image(img, 0, 0);
         noStroke();
         fill(0, 0, 255);
-        
         for (PVector temp : pointsDisplay)
         {
           ellipse(temp.x, temp.y, 2, 2);
         }
-        
-        //for (int i=0; i< points.size(); i++)
-        //{
-        //  ellipse((points.get(i)).x, (points.get(i)).y, 2, 2);
-        //}
-        
         break;
-      }
       
       case Mode.CONTOUR:
-      {
         image(imgContour, 0, 0);
         noStroke();
         fill(255, 0, 0);
@@ -159,12 +147,9 @@ void draw()
         {
           ellipse(temp.x, temp.y, 2, 2);
         }
-        
         break;
-      }
       
       case Mode.MESH:
-      {
         image(img, 0, 0);
         
         if (refreshBuffer == true){triangles = new DelaunayTriangulator(pointsDisplay).triangulate();}
@@ -188,10 +173,8 @@ void draw()
         if (refreshBufferOnce == true){refreshBuffer = false;}
         
         break;
-      }
   
     	case Mode.RESULT:
-    	{
     		image(img_b, 0, 0);
     		noStroke();
     
@@ -236,15 +219,11 @@ void draw()
     		endShape();
         if (refreshBufferOnce == true){refreshBuffer = false;}
         break;
-    	}
     
       default:
-      {
         image(img, 0, 0);
         noStroke();
-        
         break;
-      }
     }
 
   
@@ -261,12 +240,6 @@ void keyPressed()
 {
   globalKeyPressed(key);
 }
-
-
-/////////////////////////////////////////
-//        OTHER FUNCTIONS              //
-/////////////////////////////////////////
-
 
 //create a contour image from img , using weight v, and threshold
 PImage contourImage (PImage img, int v, int threshold)

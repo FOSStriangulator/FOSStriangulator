@@ -23,7 +23,7 @@ void mouseMoved()
   mappedMouseX = (mouseX/zoom - (xtrans-xzoom));
   mappedMouseY = (mouseY/zoom - (ytrans-yzoom));
   
-  if (deleteMode == false && panMode == false)
+  if (deleteMode == false && panMode == false) // todo what does THIS do?
   {
     pointsDisplay = (LinkedHashSet)points.clone();   
     pointsDisplay.add(new PVector(mappedMouseX, mappedMouseY, 0));
