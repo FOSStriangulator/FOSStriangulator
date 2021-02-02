@@ -208,13 +208,13 @@ void pointsFileSelect(File selection)
         edgePtsSlider.setValue(0);
       }
       else {
-        messageArea.setColor(Colors.ERROR);
+        messageArea.setColor(Colors.ATTENTION);
         messageArea.setText("Error!\nPoint file does not match the loaded image.");
       }
     }
     else
     {
-      messageArea.setColor(Colors.ERROR);
+      messageArea.setColor(Colors.ATTENTION);
       messageArea.setText("Error!\nPlease choose a TXT file.");
     }
   }
@@ -328,13 +328,13 @@ void imageFileSelect(File selection)
         messageArea.setText("Success!\nYour image has been loaded!" + Scaled);
       } 
       else {
-        messageArea.setColor(Colors.ERROR);
+        messageArea.setColor(Colors.ATTENTION);
         messageArea.setText("Error!\nFile chosen is not a valid image file.");
       }
     }  
     else
     {
-      messageArea.setColor(Colors.ERROR);
+      messageArea.setColor(Colors.ATTENTION);
       messageArea.setText("Error!\nOnly these file types are supported: JPEG, JPG, PNG, TGA, and GIF.");
     }
   }

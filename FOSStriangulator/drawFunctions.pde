@@ -17,19 +17,19 @@
 void drawEraserCursor ()
 {
    noFill();
-   stroke(0);
+   stroke(Colors.ATTENTION);
    strokeWeight(2.0/zoom);
    ellipse(mappedMouseX, mappedMouseY, eraserSize*2.0,eraserSize*2.0);
-   //ellipse(mouseX, mouseY, eraserSize*2.0,eraserSize*2.0);
 }
 
 void drawPoints (int colorInt)
 {
-   noStroke();
-   fill(colorInt);
+   stroke(Colors.POINT_OUTLINE);
+   strokeWeight(1.5/zoom);
+   fill(255);
    for (PVector temp : pointsDisplay)
    {
-      ellipse(temp.x, temp.y, 2, 2);
+      ellipse(temp.x, temp.y, 2.5, 2.5);
    }
 }
 
@@ -39,7 +39,7 @@ void drawTriangleMesh ()
    beginShape(TRIANGLES);
    strokeJoin(BEVEL);
    strokeWeight(0.7/zoom);
-   stroke(0, 0, 255);
+   stroke(Colors.POINT_OUTLINE);
    for (int i = 0; i < triangles.size(); i++) 
    {
       Triangle2D t = (Triangle2D)triangles.get(i);
