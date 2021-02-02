@@ -52,7 +52,6 @@ int controlFrameWidth = 360;
 int initWindowLocationX = 100;
 int initWindowLocationY = 100;
 
-
 //Pan Zoom variables
 float zoom;
 float xtrans, ytrans;
@@ -73,8 +72,6 @@ LinkedHashSet<PVector> pointsDisplay = new LinkedHashSet<PVector>();
 
 IntList contourPoints = new IntList();
 IntList nonContourPoints = new IntList();
-
-
 
 void setup()
 {
@@ -184,7 +181,7 @@ PImage contourImage (PImage img, int v, int threshold)
 					   { v, v, v } };
 		
 	PImage edgeImg = createImage(img.width, img.height, RGB);
-	//long timer = System.currentTimeMillis();
+
 	// Loop through every pixel in the image.
 	for (int y = 1; y < img.height-1; y++) 
 	{ // Skip top and bottom edges
@@ -205,13 +202,25 @@ PImage contourImage (PImage img, int v, int threshold)
 			}
 			// For this pixel in the new image, set the gray value
 			// based on the sum from the kernel
-			if (sum >= threshold) {sum = 255;}
-			else {sum = 0;}
+			if (sum >= threshold) {sum = 0;}
+			else {sum = 255;}
 			//println(sum);
 			edgeImg.pixels[y*img.width + x] = color(sum);
-
 		}
 	}
+
+  // color all vertical edges white
+  for (int y = 0; y < img.height; y++) {
+    edgeImg.pixels[y*img.width + 0] = color(255);
+    edgeImg.pixels[y*img.width + img.width-1] = color(255);
+  }
+
+  // color all horizontal edges white
+  for (int x = 0; x < img.width; x++) {
+    edgeImg.pixels[0 + x] = color(255);
+    edgeImg.pixels[(img.height-1)*img.width + x] = color(255);
+  }
+
 	// State that there are changes to edgeImg.pixels[]
 	edgeImg.updatePixels();
 
@@ -235,12 +244,12 @@ ArrayList<IntList> getThresholdPixels (PImage inImg, boolean shuffled)
 			if ( value > 254 || x == 0 || y == 0 || x == inImg.width-1 || y == inImg.height-1)
 			{
 				int i = y*inImg.width + x;
-				cP.append(i);
+				nCP.append(i);
 			}
 			else
 			{
 				int i = y*inImg.width + x;
-				nCP.append(i);
+				cP.append(i);
 			}
 		
 		}
@@ -256,23 +265,6 @@ ArrayList<IntList> getThresholdPixels (PImage inImg, boolean shuffled)
 	return result;
 }
 
-int[] shuffle (int[] array) 
-{
-  int m = array.length, t, i;
-
-  // While there remain elements to shuffle
-  while (m < 0) {
-
-    // Pick a remaining element
-    i = (int)Math.floor(Math.random() * m--);
-
-    // And swap it with the current element.
-    t = array[m];
-    array[m] = array[i];
-    array[i] = t;
-  }
-  return array;
-}
 //create a hashset of cartesian coords from intlist of pixel coordinates
 LinkedHashSet<PVector> sublistIntList (IntList inList, int start, int end)
 {
@@ -292,6 +284,11 @@ PVector intToCoords (int tempPoint)
 	PVector result = new PVector(tempX, tempY, 0);
 	return result;
 }
+
+
+
+
+
 
 boolean notInsideImage (float _x, float _y)
 {
