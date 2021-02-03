@@ -30,9 +30,11 @@ PImage contourImage (PImage img, int v, int threshold)
 			}
 			// For this pixel in the new image, set the gray value
 			// based on the sum from the kernel
-			if (sum >= threshold) {sum = 0;}
-			else {sum = 255;}
-			//println(sum);
+			if (sum >= threshold)
+				sum = 0;
+			else
+				sum = 255;
+			
 			edgeImg.pixels[y*img.width + x] = color(sum);
 		}
 	}
@@ -94,14 +96,15 @@ ArrayList<IntList> getThresholdPixels (PImage inImg, boolean shuffled)
 }
 
 //create a hashset of cartesian coords from intlist of pixel coordinates
-LinkedHashSet<PVector> sublistIntList (IntList inList, int start, int end)
+void addIntSubset (LinkedHashSet<PVector> pointSet, IntList intList, int count)
 {
-	LinkedHashSet<PVector> result = new LinkedHashSet<PVector>();
-	for(int i = start; i < end; i++)
+    if (intList.size() < count)
+        count = intList.size();
+
+	for(int i = 0; i < count; i++)
 	{
-		result.add((intToCoords(inList.get(i))));
+		pointSet.add(intToCoords(intList.get(i)));
 	}
-	return result;
 }
 
 //converts image pixel coordinate to cartesian coordinate

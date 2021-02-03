@@ -95,39 +95,43 @@ public void setMode(int mode)
     refreshBuffer = true;
 }
 
-//need to resolve this - currently uses the old pvector list need to convert everything to hashset
+//TODO fix ConcurrentModificationException
 public void setRandomPts(int pointsNumber)
 {
-  //noLoop();
-  if (deleteMode == true){refreshBuffer = true;}
-  LinkedHashSet<PVector> contourPointsHash = new LinkedHashSet<PVector>(sublistIntList(contourPoints, 0, (int)edgePtsSlider.getValue()));
-  LinkedHashSet<PVector> nonContourPointsHash = new LinkedHashSet<PVector>(sublistIntList(nonContourPoints, 0, pointsNumber));   
-  points = new LinkedHashSet<PVector>();
-  pointsDisplay = new LinkedHashSet<PVector>();
-  points.addAll(userPointsHash);
-  points.addAll(contourPointsHash);
-  points.addAll(nonContourPointsHash);
-  
-  pointsDisplay.addAll(points);
+  if (deleteMode == true)
+    refreshBuffer = true;
 
-  //println(userPointsHash);
-  //loop();
+  LinkedHashSet<PVector> pointsTemp = new LinkedHashSet<PVector>();
+  pointsTemp.addAll(userPointsHash);
+  addIntSubset(pointsTemp, contourPoints, (int)edgePtsSlider.getValue());
+  addIntSubset(pointsTemp, nonContourPoints, pointsNumber);
+
+  LinkedHashSet<PVector> pointsDisplayTemp = new LinkedHashSet<PVector>();
+  pointsDisplayTemp.addAll(pointsTemp);
+  
+  noLoop();
+  points = pointsTemp;
+  pointsDisplay = pointsDisplayTemp;
+  loop();
 }
 
 public void setEdgePts(int pointsNumber)
 {
-  //noLoop();
-  if (deleteMode == true){refreshBuffer = true;}
-  LinkedHashSet<PVector> contourPointsHash = new LinkedHashSet<PVector>(sublistIntList(contourPoints, 0, pointsNumber));
-  LinkedHashSet<PVector> nonContourPointsHash = new LinkedHashSet<PVector>(sublistIntList(nonContourPoints, 0, (int)randomPtsSlider.getValue()));   
-  points = new LinkedHashSet<PVector>();
-  pointsDisplay = new LinkedHashSet<PVector>();
-  points.addAll(userPointsHash);
-  points.addAll(contourPointsHash);
-  points.addAll(nonContourPointsHash);
+  if (deleteMode == true)
+    refreshBuffer = true;
   
-  pointsDisplay.addAll(points);
-  //loop();
+  LinkedHashSet<PVector> pointsTemp = new LinkedHashSet<PVector>();
+  pointsTemp.addAll(userPointsHash);
+  addIntSubset(pointsTemp, contourPoints, pointsNumber);
+  addIntSubset(pointsTemp, nonContourPoints, (int)randomPtsSlider.getValue());
+  
+  LinkedHashSet<PVector> pointsDisplayTemp = new LinkedHashSet<PVector>();
+  pointsDisplayTemp.addAll(pointsTemp);
+  
+  noLoop();
+  points = pointsTemp;
+  pointsDisplay = pointsDisplayTemp;
+  loop();
 }
 
 public void setEraserSize(int size)

@@ -202,6 +202,7 @@ void pointsFileSelect(File selection)
           userPointsHash.add(new PVector(x_, y_, 0));
         }
         loop();
+        
         messageArea.setColor(Colors.SUCCESS);
         messageArea.setText("Success!\nYour points have been loaded.");
         randomPtsSlider.setValue(0);
