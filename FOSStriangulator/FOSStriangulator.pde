@@ -74,12 +74,12 @@ IntList nonContourPoints = new IntList();
 void setup()
 {
   zoom = 1.0;
-  img = loadImage("Instructions.png");
-  icon = loadImage("icon.png");
+  img = loadImage("assets/instructions.png");
+  icon = loadImage("assets/icon.png");
 
   /*
   For flatpaks, use:
-	img = loadImage("/app/share/Instructions.png");
+	img = loadImage("/app/share/instructions.png");
   icon = loadImage("/app/share/icon.png");
   */
 
