@@ -134,9 +134,9 @@ public void setEdgePts(int pointsNumber)
   loop();
 }
 
-public void setEraserSize(int size)
+public void setEraserSize(int newSize)
 {
-  eraserSize = size;
+  eraserSize = newSize;
   eraserToggle.setState(true);
   toggleEraser(true);
 }

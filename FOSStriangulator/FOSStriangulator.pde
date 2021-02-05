@@ -38,7 +38,7 @@ boolean refreshBufferOnce = false;
 //Graphic UI varialbles
 int maxEraserSize = 80;
 int minEraserSize = 1;
-float eraserSize = 5.0;
+int eraserSize = 5;
 PImage img, img_b, imgContour, icon;
 
 //Control varialbles
@@ -54,8 +54,7 @@ int initWindowLocationY = 100;
 
 //Pan Zoom variables
 float zoom;
-float xtrans, ytrans;
-float xzoom, yzoom;
+float originX, originY;
 float mappedMouseX,mappedMouseY;
 
 //text file writer
@@ -75,7 +74,7 @@ IntList nonContourPoints = new IntList();
 
 void setup()
 {
-  zoom=1.0;
+  zoom = 1.0;
   img = loadImage("Instructions.png");
   icon = loadImage("icon.png");
 
@@ -121,8 +120,8 @@ void setup()
 void draw()
 {
   scale(zoom);
-  translate(xtrans-xzoom,ytrans-yzoom);
-  background(128);
+  translate(originX, originY);
+  background(Colors.CANVAS);
   
   switch(displayMode)
   {
@@ -167,5 +166,9 @@ void draw()
 // key presses within main window
 void keyPressed() 
 {
-  globalKeyPressed(key);
+  if (key == CODED) {
+    codedKeyPressed(keyCode);
+  } else {
+    globalKeyPressed(key);
+  }
 }

@@ -20,8 +20,8 @@ void mouseMoved()
   //println(frameRate);
   
   loop();
-  mappedMouseX = (mouseX/zoom - (xtrans-xzoom));
-  mappedMouseY = (mouseY/zoom - (ytrans-yzoom));
+  mappedMouseX = (mouseX/zoom - originX);
+  mappedMouseY = (mouseY/zoom - originY);
   
   if (deleteMode == false && panMode == false)
   {

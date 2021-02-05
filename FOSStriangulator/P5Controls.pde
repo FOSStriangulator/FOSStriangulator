@@ -223,8 +223,9 @@ public class ControlFrame extends PApplet
     .setColor(Colors.ON_BG)
     .setColorBackground(Colors.BG_950)
     .setBorderColor(Colors.BG_950)
-    .setText("Messages will appear here")  
-    ;
+    .setText("");
+
+    resetMessageArea();
   }
 
   public void draw() 
@@ -241,6 +242,10 @@ public class ControlFrame extends PApplet
   // key presses within control panel
   void keyPressed()
   {
-    globalKeyPressed(key);
+    if (key == CODED) {
+      codedKeyPressed(keyCode);
+    } else {
+      globalKeyPressed(key);
+    }
   }
 }

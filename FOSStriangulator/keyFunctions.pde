@@ -57,6 +57,35 @@ void globalKeyPressed(char key) {
       if (eraserSize < maxEraserSize)
         eraserSize++;
       break;
+    case '+':
+      zoomIn();
+      break;
+    case '-':
+      zoomOut();
+      break;
+    case '0':
+      resetView();
+      break;
+    default:
+      return;
+  }
+  redraw();
+}
+
+void codedKeyPressed(int keyCode) {
+  switch (keyCode) {
+    case UP:
+      moveUp();
+      break;
+    case DOWN:
+      moveDown();
+      break;
+    case LEFT:
+      moveLeft();
+      break;
+    case RIGHT:
+      moveRight();
+      break;
     default:
       return;
   }

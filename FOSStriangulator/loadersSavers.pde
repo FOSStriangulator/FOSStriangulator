@@ -18,8 +18,7 @@ void pdfFileSave(File selection)
 {
   if (selection == null) 
   {
-    messageArea.setColor(Colors.ON_BG);
-    messageArea.setText("Status:\nNothing selected, no file saved.");
+    setMessage("Nothing selected, no file saved.", MessageType.STATUS);
   } 
   else
   {
@@ -38,8 +37,7 @@ void svgFileSave(File selection)
 {
   if (selection == null) 
   {
-    messageArea.setColor(Colors.ON_BG);
-    messageArea.setText("Status:\nNothing selected, no file saved.");
+    setMessage("Nothing selected, no file saved.", MessageType.STATUS);
   } 
   else
   {
@@ -74,16 +72,14 @@ void saveSvgPdf(String path, String renderer) {
   pgraphics.dispose();
   pgraphics.endDraw();
 
-  messageArea.setColor(Colors.SUCCESS);
-  messageArea.setText("Success!\nTriangulation has been exported!");
+  setMessage("Triangulation has been exported!", MessageType.SUCCESS);
 }
 
 void objFileSave(File selection)
 {
   if (selection == null) 
   {
-    messageArea.setColor(Colors.ON_BG);
-    messageArea.setText("Status:\nNothing selected, no file saved.");
+    setMessage("Nothing selected, no file saved.", MessageType.STATUS);
   }
   else
   {
@@ -156,8 +152,7 @@ void objFileSave(File selection)
     outputMTL.flush();  // Writes the remaining data to the file
     outputMTL.close();  // Finishes the file
     
-    messageArea.setColor(Colors.SUCCESS);
-    messageArea.setText("Success!\nYour file has been saved!");
+    setMessage("Your file has been saved!", MessageType.SUCCESS);
   }
 }
 
@@ -177,10 +172,8 @@ void pointsFileSelect(File selection)
       if (parseFloat(width_height[0]) == img.width && parseFloat(width_height[1]) == img.height)
       {
         zoom = 1.0;
-        xtrans = 0.0;
-        ytrans = 0.0;
-        xzoom = 0.0;
-        yzoom = 0.0;
+        originX = 0.0;
+        originY = 0.0;
 
         noLoop();
         
@@ -203,20 +196,17 @@ void pointsFileSelect(File selection)
         }
         loop();
         
-        messageArea.setColor(Colors.SUCCESS);
-        messageArea.setText("Success!\nYour points have been loaded.");
+        setMessage("Your points have been loaded.", MessageType.SUCCESS);
         randomPtsSlider.setValue(0);
         edgePtsSlider.setValue(0);
       }
       else {
-        messageArea.setColor(Colors.ATTENTION);
-        messageArea.setText("Error!\nPoint file does not match the loaded image.");
+        setMessage("Point file does not match the loaded image.", MessageType.ERROR);
       }
     }
     else
     {
-      messageArea.setColor(Colors.ATTENTION);
-      messageArea.setText("Error!\nPlease choose a TXT file.");
+      setMessage("Please choose a TXT file.", MessageType.ERROR);
     }
   }
 }
@@ -226,8 +216,7 @@ void imageFileSelect(File selection)
 {
   if (selection == null) 
   {
-    messageArea.setColor(Colors.ON_BG);
-    messageArea.setText("Status:\nNothing selected, selection was cancelled.");
+    setMessage("Nothing selected, selection was cancelled.", MessageType.STATUS);
   } 
   else 
   {
@@ -240,7 +229,7 @@ void imageFileSelect(File selection)
       { 
         img = checkImg.get();
 
-        String Scaled = ""; 
+        String scaledStr = ""; 
         String extension = "";
 
         int q = selection.getAbsolutePath().lastIndexOf('.');
@@ -282,7 +271,7 @@ void imageFileSelect(File selection)
 
           //scaledImage.save(selection.getAbsolutePath().substring(0, q)+"_scaled." + extension);
           //img = loadImage(selection.getAbsolutePath().substring(0, q)+"_scaled." + extension);
-          Scaled = ("\nYour image has been scaled to fit, as it was too large for your display.");
+          scaledStr = ("\nYour image has been scaled to fit, as it was too large for your display.");
           img = scaledImage.get(0,0,targetWidth,targetHeight);
         }
         
@@ -293,10 +282,8 @@ void imageFileSelect(File selection)
 
         surface.setSize(img.width, img.height);
         zoom = 1.0;
-        xtrans=0.0;
-        ytrans=0.0;
-        xzoom=0.0;
-        yzoom=0.0;
+        originX = 0.0;
+        originY = 0.0;
 
         //chosenPointsHash = new LinkedHashSet<PVector>();
         userPointsHash = new LinkedHashSet<PVector>();
@@ -325,18 +312,15 @@ void imageFileSelect(File selection)
         randomPtsSlider.setValue(0);
         edgePtsSlider.setValue(0);
 
-        messageArea.setColor(Colors.SUCCESS);
-        messageArea.setText("Success!\nYour image has been loaded!" + Scaled);
+        setMessage("Your image has been loaded!" + scaledStr, MessageType.SUCCESS);
       } 
       else {
-        messageArea.setColor(Colors.ATTENTION);
-        messageArea.setText("Error!\nFile chosen is not a valid image file.");
+        setMessage("File chosen is not a valid image file.", MessageType.ERROR);
       }
     }  
     else
     {
-      messageArea.setColor(Colors.ATTENTION);
-      messageArea.setText("Error!\nOnly these file types are supported: JPEG, JPG, PNG, TGA, and GIF.");
+      setMessage("Only these file types are supported: JPEG, JPG, PNG, TGA, and GIF.", MessageType.ERROR);
     }
   }
 }
@@ -345,8 +329,7 @@ void pointsFileSave(File selection)
 {
   if (selection == null) 
   {
-    messageArea.setColor(Colors.ON_BG);
-    messageArea.setText("Status:\nNothing selected, no file saved.");
+    setMessage("Nothing selected, no file saved.", MessageType.STATUS);
   } 
   else
   {
@@ -368,7 +351,6 @@ void pointsFileSave(File selection)
     
     output.flush();  // Writes the remaining data to the file
     output.close();  // Finishes the file
-    messageArea.setColor(Colors.SUCCESS);
-    messageArea.setText("Success!\nYour file has been saved!");
+    setMessage("Your file has been saved!", MessageType.SUCCESS);
   }
 }
