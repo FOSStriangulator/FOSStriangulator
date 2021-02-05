@@ -31,7 +31,6 @@ import java.util.Iterator;
 
 public int displayMode = Mode.MESH;
 public boolean deleteMode = false;
-public boolean panMode = false;
 boolean refreshBuffer = true;
 boolean refreshBufferOnce = false;
 

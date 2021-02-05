@@ -58,10 +58,10 @@ void globalKeyPressed(char key) {
         eraserSize++;
       break;
     case '+':
-      zoomIn();
+      zoomIn(1);
       break;
     case '-':
-      zoomOut();
+      zoomOut(1);
       break;
     case '0':
       resetView();
@@ -75,16 +75,16 @@ void globalKeyPressed(char key) {
 void codedKeyPressed(int keyCode) {
   switch (keyCode) {
     case UP:
-      moveUp();
+      moveUp(1);
       break;
     case DOWN:
-      moveDown();
+      moveDown(1);
       break;
     case LEFT:
-      moveLeft();
+      moveLeft(1);
       break;
     case RIGHT:
-      moveRight();
+      moveRight(1);
       break;
     default:
       return;

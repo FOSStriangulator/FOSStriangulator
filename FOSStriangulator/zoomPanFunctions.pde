@@ -5,20 +5,20 @@ final float ZOOM_PRECISION = 0.1;
 final float MAX_ZOOM = 10.0;
 final float MIN_ZOOM = 0.1;
 
-void moveLeft() {
-	originX += PAN_CONST;
+void moveLeft(float steps) {
+	originX += PAN_CONST * steps;
 }
 
-void moveRight() {
-	originX -= PAN_CONST;
+void moveRight(float steps) {
+	originX -= PAN_CONST * steps;
 }
 
-void moveUp() {
-	originY += PAN_CONST;
+void moveUp(float steps) {
+	originY += PAN_CONST * steps;
 }
 
-void moveDown() {
-	originY -= PAN_CONST;
+void moveDown(float steps) {
+	originY -= PAN_CONST * steps;
 }
 
 void resetView() {
@@ -28,16 +28,20 @@ void resetView() {
 	resetMessageArea();
 }
 
-void zoomIn() {
-	if (roundToPrecision(zoom, ZOOM_PRECISION) < MAX_ZOOM)
-        zoom += 0.1;
-	resetMessageArea();
+void zoomIn(float steps) {
+	float newZoom = roundToPrecision(zoom + 0.1 * steps, ZOOM_PRECISION);
+	if (newZoom <= MAX_ZOOM) {
+        zoom = newZoom;
+		resetMessageArea();
+	}
 }
 
-void zoomOut() {
-	if (roundToPrecision(zoom, ZOOM_PRECISION) > MIN_ZOOM)
-        zoom -= 0.1;
-	resetMessageArea();
+void zoomOut(float steps) {
+	float newZoom = roundToPrecision(zoom - 0.1 * steps, ZOOM_PRECISION);
+	if (newZoom >= MIN_ZOOM) {
+        zoom = newZoom;
+		resetMessageArea();
+	}
 }
 
 float roundToPrecision(float number, float precision) {

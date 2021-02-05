@@ -23,7 +23,7 @@ void mouseMoved()
   mappedMouseX = (mouseX/zoom - originX);
   mappedMouseY = (mouseY/zoom - originY);
   
-  if (deleteMode == false && panMode == false)
+  if (deleteMode == false)
   {
     // preview on hover
     pointsDisplay = (LinkedHashSet)points.clone();   
@@ -31,17 +31,30 @@ void mouseMoved()
   }
 }
 
-void mouseDragged()
-{
-  if (mouseButton == CENTER)
-  {
-    panMode = true;
-    //TODO
-  }
-}
-
 void mouseWheel(MouseEvent event) {
-  //TODO
+  loop();
+  float count = event.getCount();
+
+  if (event.isControlDown()) { // zoom
+    if (count < 0) {
+      zoomOut(-count);
+    }
+    else {
+      zoomIn(count);
+    }
+  } else if (event.isShiftDown()) { // horizontal scrolling
+    if (count < 0) {
+      moveLeft(-count / 10);
+    } else {
+      moveRight(count / 10);
+    }
+  } else { // vertical scrolling
+    if (count < 0) {
+      moveUp(-count / 10);
+    } else {
+      moveDown(count / 10);
+    }
+  }
 }
 
 void mouseEntered()
@@ -58,8 +71,6 @@ void mouseExited()
 
 void mousePressed() 
 { 
-  if (mouseButton != CENTER) {panMode = false;}
-  
   if (deleteMode == false && mouseEvent.getClickCount()< 2 && mouseButton == LEFT)
   {
     //println("mouse pressed");
@@ -105,6 +116,5 @@ void mousePressed()
 
 void mouseReleased() 
 {
-  panMode = false;
   frameRate(60);
 }
