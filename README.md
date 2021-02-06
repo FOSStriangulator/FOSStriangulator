@@ -17,3 +17,6 @@ Contributions are welcome!
 "Processing" might sound unfamiliar, but really, it's basically just Java (and it interoperates with Java, too!).
 
 See open [issues](https://github.com/FOSStriangulator/FOSStriangulator/issues) for ways how to contribute or submit your own.
+
+## Like and share
+Give FOSStriangulator a like on [AlternativeTo](https://alternativeto.net/software/fosstriangulator/about/) and spread word about the app on social media.
