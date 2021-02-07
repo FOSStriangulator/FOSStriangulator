@@ -126,12 +126,12 @@ void draw()
   {
     case Mode.POINTS:
       image(img, 0, 0);
-      drawPoints(0xff0000FF);
+      drawPoints();
       break;
     
     case Mode.CONTOUR:
       image(imgContour, 0, 0);
-      drawPoints(0xffFF0000);
+      drawPoints();
       break;
     
     case Mode.MESH:

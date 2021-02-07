@@ -22,7 +22,7 @@ void drawEraserCursor ()
    ellipse(mappedMouseX, mappedMouseY, eraserSize*2.0,eraserSize*2.0);
 }
 
-void drawPoints (int colorInt)
+void drawPoints()
 {
    stroke(Colors.POINT_OUTLINE);
    strokeWeight(1.5/zoom);
