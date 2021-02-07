@@ -15,8 +15,7 @@
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
 
-void mouseMoved()
-{
+void mouseMoved() {
   //println(frameRate);
   
   loop();
@@ -35,7 +34,7 @@ void mouseWheel(MouseEvent event) {
   loop();
   float count = event.getCount();
 
-  if (event.isControlDown()) { // zoom
+  if (event.isControlDown() || event.isMetaDown()) { // zoom
     if (count < 0) {
       zoomOut(-count);
     }
@@ -57,11 +56,6 @@ void mouseWheel(MouseEvent event) {
   }
 }
 
-void mouseEntered()
-{
-  //println("mouse entered");
-}
-
 void mouseExited()
 {
   pointsDisplay = (LinkedHashSet)points.clone(); 
@@ -69,48 +63,11 @@ void mouseExited()
 }
 
 
-void mousePressed() 
-{ 
-  if (deleteMode == false && mouseEvent.getClickCount()< 2 && mouseButton == LEFT)
-  {
-    //println("mouse pressed");
-    //long timer = System.currentTimeMillis();
-    noLoop();  
-
-    points.add(new PVector(mappedMouseX, mappedMouseY, 0));
-    //pointsDisplay.add(new PVector(mappedMouseX, mappedMouseY, 0));
-    userPointsHash.add(new PVector(mappedMouseX, mappedMouseY, 0));
-    
-    //redraw();
-    //loop();
-  }
-  else if (deleteMode == true && mouseButton == LEFT)
-  {
-    //for (PVector temp : points)
-    //{
-    //  float d = dist(mappedMouseX, mappedMouseY, temp.x, temp.y);
-    //  if ( d < eraserSize)
-    //  {
-    //    userPointsHash.remove(temp);
-    //    points.remove(temp);
-    //  }
-    //}
-    
-    //LinkedHashSet<PVector> points = new LinkedHashSet<PVector>(); 
-    refreshBuffer = true;
-    refreshBufferOnce = true;
-    Iterator<PVector> it = pointsDisplay.iterator();
-    while(it.hasNext())
-    {
-      PVector p = it.next();
-      float d = dist(mappedMouseX, mappedMouseY, p.x, p.y);
-      if ( d < eraserSize)
-      {
-       userPointsHash.remove(p);
-       it.remove();
-      }
-    }
-    points = (LinkedHashSet)pointsDisplay.clone(); 
+void mousePressed() { 
+  if (deleteMode == false && mouseEvent.getClickCount()< 2 && mouseButton == LEFT) {
+    addPoint(mappedMouseX, mappedMouseY);
+  } else if (deleteMode == true && mouseButton == LEFT) {
+    eraseArea(mappedMouseX, mappedMouseY);
   }
 }
 
