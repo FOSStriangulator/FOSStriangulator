@@ -89,10 +89,17 @@ public void setEdgeThreshold (int _value)
 public void setMode(int mode) 
 { 
   displayMode = mode;
-  modeRadio.activate(mode);
-
-  if (mode == Mode.MESH || mode == Mode.RESULT)
-    refreshBuffer = true;
+  switch (mode) {
+    case Mode.MESH:
+    case Mode.RESULT:
+      modeRadio.activate(mode);
+      break;
+    case Mode.POINTS:
+    case Mode.CONTOUR:
+      refreshBuffer = true;
+      modeRadio.activate(mode);
+      break;
+  }
 }
 
 //TODO fix ConcurrentModificationException
