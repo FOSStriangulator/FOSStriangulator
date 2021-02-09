@@ -16,9 +16,12 @@
 
 void globalKeyPressed(char key) {
   switch (key) {
-    case 's':
-    case 'S':
-      saveSvgPdf("output.pdf", PDF);
+    case ' ': // todo test + make sure it doesn't result in concurrent exception
+      if (deleteMode == false) {
+        addPoint(mappedMouseX, mappedMouseY);
+      } else if (deleteMode == true) {
+        eraseArea(mappedMouseX, mappedMouseY);
+      }
       break;
     case 'p':
     case 'P':

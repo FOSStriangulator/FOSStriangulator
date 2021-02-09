@@ -27,9 +27,9 @@ void drawPoints()
    stroke(Colors.POINT_OUTLINE);
    strokeWeight(1.5/zoom);
    fill(255);
-   for (PVector temp : pointsDisplay)
+   for (PVector pt : pointsDisplay)
    {
-      ellipse(temp.x, temp.y, 2.5, 2.5);
+      ellipse(pt.x, pt.y, 2.5, 2.5);
    }
 }
 
