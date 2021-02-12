@@ -14,14 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
-interface Colors {
-  int
-  ACCENT_700 = 0xff0097A7, 
-  ACCENT_800 = 0xff00838F, 
-  ON_BG = 0xffffffff,
-  BG_800 = 0xff37474F,
-  BG_900 = 0xff263238,
-  BG_950 = 0xff1B2428,
-  SUCCESS = 0xff00E676,
-  ERROR = 0xffF44336;
+interface MessageType {
+	int
+	INFO = 0,
+	STATUS = 1,
+	SUCCESS = 2,
+	ERROR = 3;
 }

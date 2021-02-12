@@ -14,40 +14,47 @@
 // You should have received a copy of the GNU General Public License
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
-/////////////////////////////////////////
-//        MOUSE FUNCTIONS              //
-/////////////////////////////////////////
-
 
 void mouseMoved()
 {
   //println(frameRate);
   
   loop();
-  mappedMouseX = (mouseX/zoom - (xtrans-xzoom));
-  mappedMouseY = (mouseY/zoom - (ytrans-yzoom));
+  mappedMouseX = (mouseX/zoom - originX);
+  mappedMouseY = (mouseY/zoom - originY);
   
-  if (deleteMode == false && panMode == false)
+  if (deleteMode == false)
   {
+    // preview on hover
     pointsDisplay = (LinkedHashSet)points.clone();   
     pointsDisplay.add(new PVector(mappedMouseX, mappedMouseY, 0));
-  }
-  else if (deleteMode == true && panMode == false)
-  {
-    
-  }
-}
-void mouseDragged()
-{
-  if (mouseButton == CENTER)
-  {
-    panMode = true;
-    //TODO
   }
 }
 
 void mouseWheel(MouseEvent event) {
-  //TODO
+  loop();
+  float count = event.getCount();
+
+  if (event.isControlDown()) { // zoom
+    if (count < 0) {
+      zoomOut(-count);
+    }
+    else {
+      zoomIn(count);
+    }
+  } else if (event.isShiftDown()) { // horizontal scrolling
+    if (count < 0) {
+      moveLeft(-count / 10);
+    } else {
+      moveRight(count / 10);
+    }
+  } else { // vertical scrolling
+    if (count < 0) {
+      moveUp(-count / 10);
+    } else {
+      moveDown(count / 10);
+    }
+  }
 }
 
 void mouseEntered()
@@ -64,8 +71,6 @@ void mouseExited()
 
 void mousePressed() 
 { 
-  if (mouseButton != CENTER) {panMode = false;}
-  
   if (deleteMode == false && mouseEvent.getClickCount()< 2 && mouseButton == LEFT)
   {
     //println("mouse pressed");
@@ -107,10 +112,9 @@ void mousePressed()
     }
     points = (LinkedHashSet)pointsDisplay.clone(); 
   }
-} //end mousepressed
+}
 
 void mouseReleased() 
 {
-  panMode = false;
   frameRate(60);
-}//end released
+}
