@@ -17,10 +17,10 @@
 void globalKeyPressed(char key) {
   switch (key) {
     case ' ': // todo test + make sure it doesn't result in concurrent exception
-      if (deleteMode == false) {
-        addPoint(mappedMouseX, mappedMouseY);
-      } else if (deleteMode == true) {
+      if (eraserOn) {
         eraseArea(mappedMouseX, mappedMouseY);
+      } else {
+        addPoint(mappedMouseX, mappedMouseY);
       }
       break;
     case 'p':
@@ -45,7 +45,7 @@ void globalKeyPressed(char key) {
       break;
     case 'e':
     case 'E':
-      if (deleteMode) 
+      if (eraserOn) 
         eraserToggle.setState(false);
       else  
         eraserToggle.setState(true);

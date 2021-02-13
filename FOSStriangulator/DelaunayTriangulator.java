@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.LinkedHashSet;
+import java.util.Iterator;
 import processing.core.PVector;
 
 /**
@@ -56,7 +57,8 @@ public class DelaunayTriangulator {
 
     public DelaunayTriangulator(LinkedHashSet<PVector> pPoints) {
         this.pointSet = new ArrayList<PVector>(pPoints.size());
-        for (PVector pvector : pPoints) {
+        for (Iterator<PVector> it = pPoints.iterator(); it.hasNext();) {
+            PVector pvector = it.next();
             pointSet.add(new PVector(pvector.x, pvector.y));
         }
         this.triangleSoup = new TriangleSoup();
@@ -77,7 +79,8 @@ public class DelaunayTriangulator {
          */
         float maxOfAnyCoordinate = 0.0f;
 
-        for (PVector vector : getPointSet()) {
+        for (Iterator<PVector> it = getPointSet().iterator(); it.hasNext();) {
+            PVector vector = it.next();
             maxOfAnyCoordinate = Math.max(Math.max(vector.x, vector.y), maxOfAnyCoordinate);
         }
 

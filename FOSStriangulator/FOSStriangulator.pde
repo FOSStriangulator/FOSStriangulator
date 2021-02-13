@@ -8,11 +8,11 @@
 //
 // FOSStriangulator is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
+// along with FOSStriangulator. If not, see <http://www.gnu.org/licenses/>.
 
 
 /*TODO: 
@@ -30,9 +30,9 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
 public int displayMode = Mode.MESH;
-public boolean deleteMode = false;
-boolean refreshBuffer = true;
-boolean refreshBufferOnce = false;
+public boolean eraserOn = false;
+
+boolean pointsEdited = false;
 
 //Graphic UI varialbles
 int maxEraserSize = 80;
@@ -63,10 +63,11 @@ PrintWriter output;
 ArrayList<PVector> contourPointsList = new ArrayList<PVector>();
 ArrayList<IntList> contourImgPoints;
 ArrayList triangles = new ArrayList();
+ArrayList hoverTriangles = null;
 
 LinkedHashSet<PVector> userPointsHash = new LinkedHashSet<PVector>();
 LinkedHashSet<PVector> points = new LinkedHashSet<PVector>();
-LinkedHashSet<PVector> pointsDisplay = new LinkedHashSet<PVector>(); 
+PVector hoverPoint = null;
 
 IntList contourPoints = new IntList();
 IntList nonContourPoints = new IntList();
@@ -100,7 +101,6 @@ void setup()
 	points.add(new PVector(img.width/2, img.height/2, 0));
 	
   userPointsHash.addAll(points);
-  pointsDisplay.addAll(points); 	
 	
   contourImgPoints = getThresholdPixels (imgContour, true);
 	nonContourPoints = contourImgPoints.get(0);
@@ -113,7 +113,6 @@ void setup()
 
 	controlP5 = new ControlP5(this);
 	ControlFrame cf = new ControlFrame(this, 340, 690, "Tools");
-	//noLoop();
 }
 
 void draw()
@@ -136,18 +135,14 @@ void draw()
     
     case Mode.MESH:
       image(img, 0, 0);
-      if (refreshBuffer == true){triangles = new DelaunayTriangulator(pointsDisplay).triangulate();}
+      retriangulate();
       drawTriangleMesh();
-      if (refreshBufferOnce == true){refreshBuffer = false;}
       break;
 
     case Mode.RESULT:
       image(img_b, 0, 0);
-      //LinkedHashSet pointsDisplay = new LinkedHashSet(); 
-      //pointsDisplay = (LinkedHashSet)points.clone(); 
-      if (refreshBuffer == true){triangles = new DelaunayTriangulator(pointsDisplay).triangulate();}
+      retriangulate();
       drawTriangles();
-      if (refreshBufferOnce == true){refreshBuffer = false;}
       break;
   
     default:
@@ -155,10 +150,8 @@ void draw()
       break;
   }
 
-  if (deleteMode == true) 
-  {
+  if (eraserOn) {
     drawEraserCursor();
-    refreshBuffer = false;
   } 
 }
 
