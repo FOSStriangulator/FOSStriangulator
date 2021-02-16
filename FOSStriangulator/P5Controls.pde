@@ -222,14 +222,14 @@ public class ControlFrame extends PApplet
     savePtsBtn = 
     controlP5.addButton("savePtsBtn")
     .setPosition(marginX,exportGroup.getPosition()[1] + exportGroup.getBackgroundHeight() + 15)
-    .setSize(groupWidth,largeButtonSize[1])
+    .setSize(groupWidth,largeButtonSize[1] + 10)
     .plugTo(parent,"savePts")
     .setLabel("Save points")
     ;
      
     messageArea = 
     controlP5.addTextarea("messageArea")
-    .setPosition(marginX,savePtsBtn.getPosition()[1] + 35)
+    .setPosition(marginX,savePtsBtn.getPosition()[1] + savePtsBtn.getHeight() + 15)
     .setSize(groupWidth,60)
     .setLineHeight(14)
     .setColor(Colors.ON_BG)
