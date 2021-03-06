@@ -1,25 +1,38 @@
 #!/bin/bash
-mkdir temp
+SCRIPTDIR=`dirname "$0"`
+SCRIPTDIR="$(cd "$(dirname $SCRIPTDIR)"; pwd -P)/$(basename "$SCRIPTDIR")"
+SRCDIR="$SCRIPTDIR/../FOSStriangulator"
+TEMPDIR="$SCRIPTDIR/temp-fosstriangulator-flatpak"
+
+mkdir "$TEMPDIR"
+
+mv "$SRCDIR/platformVars.pde" $TEMPDIR
+cp "$SCRIPTDIR/flatpak-src/platformVars.pde" $SRCDIR
 
 # Generate JAR
-mv ../FOSStriangulator/platformVars.pde ./temp
-cp ./flatpak-src/platformVars.pde ../FOSStriangulator
-./generate-jar.sh
-# todo move jar to temp
+
+# have the directory containing processing-java as the first argument if it's not in $PATH
+if [ "$#" -eq 1 ]; then
+	$(cd "$TEMPDIR" && "$SCRIPTDIR"/generate-jar.sh $1)
+else
+	$(cd "$TEMPDIR" && "$SCRIPTDIR"/generate-jar.sh)
+fi
+rm "$SRCDIR/platformVars.pde"
+mv "$TEMPDIR/platformVars.pde" $SRCDIR
 
 # Copy over other files
-cp ../FOSStriangulator/assets/* ./temp
-cp ../FOSStriangulator/assets/* ./temp
-mkdir ./temp/meta
-cp ../meta/linux/* ./temp/meta
+cp "$SCRIPTDIR/flatpak-src/FOSStriangulator" $TEMPDIR
+cp "$SRCDIR/assets/"* $TEMPDIR
+cp "$SRCDIR/assets/"* $TEMPDIR
+mkdir "$TEMPDIR/meta"
+cp "$SCRIPTDIR/../meta/linux/"* "$TEMPDIR/meta"
 
 # Make compressed archive
-tar -cJf FOSStriangulator.tar.xz temp/
+$(cd "$TEMPDIR" && tar -cJf FOSStriangulator.tar.xz *)
+mv "$TEMPDIR"/FOSStriangulator.tar.xz .
 
 # Clean up
-rm ./temp/meta/*
-rm ./temp/meta
-rm ./temp/*
-rm ./temp
-rm ../FOSStriangulator/platformVars.pde
-mv ./temp/platformVars.pde ../FOSStriangulator
+rm "$TEMPDIR/meta"/*
+rm -r "$TEMPDIR/meta"
+rm "$TEMPDIR"/*
+rm -r "$TEMPDIR"
