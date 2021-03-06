@@ -2,7 +2,7 @@
 
 # have the directory containing processing-java as the first argument if it's not in $PATH
 if [ "$#" -eq 1 ]; then
-    PROCESSING_DIR = $1
+    PROCESSING_DIR=$1
 	if ! command -v $PROCESSING_DIR/processing-java &> /dev/null
 	then
 		echo "processing-java could not be found in $PROCESSING_DIR."
@@ -11,20 +11,30 @@ if [ "$#" -eq 1 ]; then
 fi
 
 SCRIPTDIR=`dirname "$0"`
+SCRIPTDIR="$(cd "$(dirname $SCRIPTDIR)"; pwd -P)/$(basename "$SCRIPTDIR")"
 SRCDIR="$SCRIPTDIR/../FOSStriangulator"
-SRCDIR="$(cd "$(dirname $SRCDIR)"; pwd -P)/$(basename "$SRCDIR")"
-TEMPDIR="$SCRIPTDIR/temp"
+TEMPDIR="$SCRIPTDIR/temp-fosstriangulator-jar"
+LIBDIR="$TEMPDIR/lib"
 
 if [ "$#" -eq 1 ]; then
-	$(cd $PROCESSING_DIR && processing-java --force --sketch=$SRCDIR --output=$TEMPDIR --export --platform='linux')
+	$(cd $PROCESSING_DIR && ./processing-java --force --sketch=$SRCDIR --output=$TEMPDIR --export --platform='linux')
 else
 	processing-java --force --sketch=$SRCDIR --output=$TEMPDIR --export --platform='linux'
 fi
 
-unzip -o controlP5.jar -d $TEMPDIR/lib/FOSStriangulator
-unzip -o core.jar -d $TEMPDIR/lib/FOSStriangulator
-unzip -o itext.jar -d $TEMPDIR/lib/FOSStriangulator
-unzip -o pdf.jar -d $TEMPDIR/lib/FOSStriangulator
-unzip -o FOSStriangulator.jar -d $TEMPDIR/lib/FOSStriangulator
-cp $SCRIPTDIR/icons/* $TEMPDIR/lib/FOSStriangulator/icon/
-zip -r FOSStriangulator.jar $TEMPDIR/lib/FOSStriangulator/*
+unzip -o $LIBDIR/controlP5.jar -d $LIBDIR/FOSStriangulator
+unzip -o $LIBDIR/core.jar -d $LIBDIR/FOSStriangulator
+unzip -o $LIBDIR/itext.jar -d $LIBDIR/FOSStriangulator
+unzip -o $LIBDIR/pdf.jar -d $LIBDIR/FOSStriangulator
+unzip -o $LIBDIR/FOSStriangulator.jar -d $LIBDIR/FOSStriangulator
+cp $SCRIPTDIR/icons/* $LIBDIR/FOSStriangulator/icon/
+$(cd $LIBDIR/FOSStriangulator && zip -r FOSStriangulator.jar *)
+mv $LIBDIR/FOSStriangulator/FOSStriangulator.jar .
+
+# Remove temp directory
+rm -rf "$TEMPDIR/java"
+rm -rf "$TEMPDIR/lib/FOSStriangulator"
+rm "$TEMPDIR/lib"/*
+rm -r "$TEMPDIR/lib"
+rm -rf "$TEMPDIR/source"
+rm -r "$TEMPDIR"
