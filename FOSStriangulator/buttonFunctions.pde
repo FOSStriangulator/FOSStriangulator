@@ -14,59 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
-public void toggleEraser(boolean eraserOn) 
-{
-  //println("delete flag set");
-  if (eraserOn) 
-  {
-    deleteMode = true;
-    refreshBufferOnce = true;
-    pointsDisplay = (LinkedHashSet)points.clone();  
-  } 
-  else 
-  {
+public void toggleEraser(boolean isOn) {
+  if (isOn) {
+    eraserOn = true;
+    cancelHover();
+  }
+  else {
+    eraserOn = false;
     cursor(CROSS);
-    deleteMode = false;
-    refreshBuffer = true;
-    refreshBufferOnce = false;
   }
 }
 
-public void openImage() 
-{
-  refreshBuffer = true;
+public void openImage() {
   selectInput("Select a file to process:", "imageFileSelect");
 }
 
-public void loadPts() 
-{
-  refreshBuffer = true;
+public void loadPts() {
   selectInput("Select a points text file:", "pointsFileSelect");
 }
 
-public void savePts() 
-{
+public void savePts() {
   selectOutput("Save points text file:", "pointsFileSave");
 }
 
-public void savePDF()
-{
+public void savePDF() {
   selectOutput("Save as PDF:", "pdfFileSave");
 }
 
-public void saveSVG()
-{
+public void saveSVG() {
   selectOutput("Save as SVG:", "svgFileSave");
 }
 
-public void saveOBJ()
-{
+public void saveOBJ() {
   selectOutput("Save as OBJ:", "objFileSave");
 }
 
-public void setEdgeWeight (int _value) 
-{
-  if (deleteMode == true){refreshBuffer = true;}
+public void setEdgeWeight (int _value) {
   imgContour = contourImage(img_b, _value, (int)edgeThresholdSlider.getValue());
   contourImgPoints = getThresholdPixels (imgContour, true);
   nonContourPoints = contourImgPoints.get(0);
@@ -75,9 +58,7 @@ public void setEdgeWeight (int _value)
   modeRadio.activate(Mode.CONTOUR);
 }
 
-public void setEdgeThreshold (int _value) 
-{
-  if (deleteMode == true){refreshBuffer = true;}
+public void setEdgeThreshold (int _value) {
   imgContour = contourImage(img_b, (int)edgeWeightSlider.getValue(),_value);
   contourImgPoints = getThresholdPixels (imgContour, true);
   nonContourPoints = contourImgPoints.get(0);
@@ -86,56 +67,45 @@ public void setEdgeThreshold (int _value)
   modeRadio.activate(Mode.CONTOUR);
 }
 
-public void setMode(int mode) 
-{ 
+public void setMode(int mode) { 
   displayMode = mode;
-  modeRadio.activate(mode);
-
-  if (mode == Mode.MESH || mode == Mode.RESULT)
-    refreshBuffer = true;
+  switch (mode) {
+    case Mode.MESH:
+    case Mode.RESULT:
+      modeRadio.activate(mode);
+      break;
+    case Mode.POINTS:
+    case Mode.CONTOUR:
+      modeRadio.activate(mode);
+      break;
+  }
 }
 
-//TODO fix ConcurrentModificationException
-public void setRandomPts(int pointsNumber)
-{
-  if (deleteMode == true)
-    refreshBuffer = true;
-
+public void setRandomPts(int pointsNumber) {
   LinkedHashSet<PVector> pointsTemp = new LinkedHashSet<PVector>();
   pointsTemp.addAll(userPointsHash);
   addIntSubset(pointsTemp, contourPoints, (int)edgePtsSlider.getValue());
   addIntSubset(pointsTemp, nonContourPoints, pointsNumber);
-
-  LinkedHashSet<PVector> pointsDisplayTemp = new LinkedHashSet<PVector>();
-  pointsDisplayTemp.addAll(pointsTemp);
   
   noLoop();
   points = pointsTemp;
-  pointsDisplay = pointsDisplayTemp;
+  pointsEdited = true;
   loop();
 }
 
-public void setEdgePts(int pointsNumber)
-{
-  if (deleteMode == true)
-    refreshBuffer = true;
-  
+public void setEdgePts(int pointsNumber) {
   LinkedHashSet<PVector> pointsTemp = new LinkedHashSet<PVector>();
   pointsTemp.addAll(userPointsHash);
   addIntSubset(pointsTemp, contourPoints, pointsNumber);
   addIntSubset(pointsTemp, nonContourPoints, (int)randomPtsSlider.getValue());
   
-  LinkedHashSet<PVector> pointsDisplayTemp = new LinkedHashSet<PVector>();
-  pointsDisplayTemp.addAll(pointsTemp);
-  
   noLoop();
   points = pointsTemp;
-  pointsDisplay = pointsDisplayTemp;
+  pointsEdited = true;
   loop();
 }
 
-public void setEraserSize(int newSize)
-{
+public void setEraserSize(int newSize) {
   eraserSize = newSize;
   eraserToggle.setState(true);
   toggleEraser(true);

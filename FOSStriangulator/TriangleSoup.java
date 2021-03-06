@@ -30,6 +30,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Iterator;
 import processing.core.PVector;
 
 /**
@@ -88,7 +89,8 @@ class TriangleSoup {
      *         specified point or null
      */
     public Triangle2D findContainingTriangle(PVector point) {
-        for (Triangle2D triangle : triangleSoup) {
+        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
+            Triangle2D triangle = it.next();
             if (triangle.contains(point)) {
                 return triangle;
             }
@@ -109,7 +111,8 @@ class TriangleSoup {
      *         no triangle exists
      */
     public Triangle2D findNeighbour(Triangle2D triangle, Edge2D edge) {
-        for (Triangle2D triangleFromSoup : triangleSoup) {
+        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
+            Triangle2D triangleFromSoup = it.next();
             if (triangleFromSoup.isNeighbour(edge) && triangleFromSoup != triangle) {
                 return triangleFromSoup;
             }
@@ -128,7 +131,8 @@ class TriangleSoup {
      * @return Returns one triangle that shares the specified edge
      */
     public Triangle2D findOneTriangleSharing(Edge2D edge) {
-        for (Triangle2D triangle : triangleSoup) {
+        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
+            Triangle2D triangle = it.next();
             if (triangle.isNeighbour(edge)) {
                 return triangle;
             }
@@ -146,7 +150,8 @@ class TriangleSoup {
     public Edge2D findNearestEdge(PVector point) {
         List<EdgeDistancePack> edgeList = new ArrayList<EdgeDistancePack>();
 
-        for (Triangle2D triangle : triangleSoup) {
+        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
+            Triangle2D triangle = it.next();
             edgeList.add(triangle.findNearestEdge(point));
         }
 
@@ -167,7 +172,8 @@ class TriangleSoup {
     public void removeTrianglesUsing(PVector vertex) {
         List<Triangle2D> trianglesToBeRemoved = new ArrayList<Triangle2D>();
 
-        for (Triangle2D triangle : triangleSoup) {
+        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
+            Triangle2D triangle = it.next();
             if (triangle.hasVertex(vertex)) {
                 trianglesToBeRemoved.add(triangle);
             }

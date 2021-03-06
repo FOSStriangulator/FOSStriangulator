@@ -19,7 +19,7 @@ interface Colors {
   ACCENT_700 = 0xff0097A7,
   ACCENT_800 = 0xff00838F, 
   ON_BG = 0xffffffff,
-  BG_800 = 0xff37474F,
+  BG_700 = 0xff455A64,
   BG_900 = 0xff263238,
   BG_950 = 0xff1B2428,
   CANVAS = 0xff212121,

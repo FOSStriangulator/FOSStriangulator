@@ -21,7 +21,7 @@ void setMessage(String message, int messageType) {
     if (message != null) {
       messageString += message + "\n\n";
     }
-	messageString += ("Zoom (-/+): " + round(zoom * 100) + "%. Use arrows to move, 0 to reset.");
+	messageString += ("Zoom (-/+): " + round(zoom * 100) + "%. Use arrows to move, 0 to reset view.");
 
     messageArea.setText(messageString);
 }

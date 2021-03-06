@@ -16,9 +16,12 @@
 
 void globalKeyPressed(char key) {
   switch (key) {
-    case 's':
-    case 'S':
-      saveSvgPdf("output.pdf", PDF);
+    case ' ': // todo test + make sure it doesn't result in concurrent exception
+      if (eraserOn) {
+        eraseArea(mappedMouseX, mappedMouseY);
+      } else {
+        addPoint(mappedMouseX, mappedMouseY);
+      }
       break;
     case 'p':
     case 'P':
@@ -42,7 +45,7 @@ void globalKeyPressed(char key) {
       break;
     case 'e':
     case 'E':
-      if (deleteMode) 
+      if (eraserOn) 
         eraserToggle.setState(false);
       else  
         eraserToggle.setState(true);

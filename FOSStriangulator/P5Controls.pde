@@ -45,7 +45,7 @@ public class ControlFrame extends PApplet
   {
     surface.setTitle(name);
     surface.setLocation(initWindowLocationX,initWindowLocationY);
-    frameRate(25);
+    frameRate(25); // todo remove all frameRate methods?
     controlP5 = new ControlP5(this);
     
     //UI sizes
@@ -57,7 +57,7 @@ public class ControlFrame extends PApplet
     
     //Color styles 
     controlP5.setColorForeground(Colors.ACCENT_800);
-    controlP5.setColorBackground(Colors.BG_800);
+    controlP5.setColorBackground(Colors.BG_700);
     controlP5.setColorActive(Colors.ACCENT_700);
     
     //Components
@@ -73,7 +73,7 @@ public class ControlFrame extends PApplet
     loadPtsBtn =  
     controlP5.addButton("loadPtsBtn")
     .setPosition(marginX,openImageBtn.getPosition()[1] + openImageBtn.getHeight() + 10)
-    .setSize(groupWidth,largeButtonSize[1]+10)
+    .setSize(groupWidth,largeButtonSize[1])
     .plugTo(parent,"loadPts")
     .setLabel("Load points");
   
@@ -129,39 +129,10 @@ public class ControlFrame extends PApplet
     .plugTo(parent,"setRandomPts")
     .setGroup(generationGroup)
     ;
-  
-    Group eraserGroup = 
-    controlP5.addGroup("eraserGroup")
-    .setPosition(marginX,generationGroup.getPosition()[1] + generationGroup.getBackgroundHeight() + 30)
-    .setLabel("Eraser")
-    .setBackgroundColor(Colors.BG_950)
-    .setSize(groupWidth,88)
-    .disableCollapse()
-    ;
-  
-    eraserToggle =
-    controlP5.addToggle("eraserToggle")
-    .plugTo(parent,"toggleEraser")
-    .setPosition(groupInsetX,groupInsetX)
-    .setSize(90,largeButtonSize[1])
-    .setLabel("On/off eraser (e)")
-    .setGroup(eraserGroup)
-    ;
 
-    eraserSizeSlider = 
-    controlP5.addSlider("eraserSizeSlider")
-    .setPosition(groupInsetX,eraserToggle.getPosition()[1] + eraserToggle.getHeight() + 15 + 10)
-    .setSize(sliderWidth,largeButtonSize[1])
-    .setRange(minEraserSize,maxEraserSize)
-    .setValue(eraserSize)
-    .setLabel("Eraser size ([, ])")
-    .plugTo(parent,"setEraserSize")
-    .setGroup(eraserGroup)
-    ;
-  
     Group displayGroup = 
     controlP5.addGroup("displayGroup")
-    .setPosition(marginX,eraserGroup.getPosition()[1] + eraserGroup.getBackgroundHeight() + 30)
+    .setPosition(marginX,generationGroup.getPosition()[1] + generationGroup.getBackgroundHeight() + 30)
     .setLabel("Display mode")
     .setBackgroundColor(Colors.BG_950)
     .setSize(groupWidth,70)
@@ -182,42 +153,83 @@ public class ControlFrame extends PApplet
     .plugTo(parent,"setMode")
     .setGroup(displayGroup)
     ;
+  
+    Group eraserGroup = 
+    controlP5.addGroup("eraserGroup")
+    .setPosition(marginX,displayGroup.getPosition()[1] + displayGroup.getBackgroundHeight() + 30)
+    .setLabel("Eraser")
+    .setBackgroundColor(Colors.BG_950)
+    .setSize(groupWidth,52)
+    .disableCollapse()
+    ;
+  
+    eraserToggle =
+    controlP5.addToggle("eraserToggle")
+    .plugTo(parent,"toggleEraser")
+    .setPosition(groupInsetX,groupInsetX)
+    .setSize(40,largeButtonSize[1])
+    .setLabel("On/off (e)")
+    .setGroup(eraserGroup)
+    ;
+
+    eraserSizeSlider = 
+    controlP5.addSlider("eraserSizeSlider")
+    .setPosition(eraserToggle.getPosition()[0] + eraserToggle.getWidth() + 10,groupInsetX)
+    .setSize(sliderWidth - eraserToggle.getWidth() - 10,largeButtonSize[1])
+    .setRange(minEraserSize,maxEraserSize)
+    .setValue(eraserSize)
+    .setLabel("Eraser size ([, ])")
+    .plugTo(parent,"setEraserSize")
+    .setGroup(eraserGroup)
+    ;
+
+    Group exportGroup = 
+    controlP5.addGroup("exportGroup")
+    .setPosition(marginX,eraserGroup.getPosition()[1] + eraserGroup.getBackgroundHeight() + 30)
+    .setLabel("Export")
+    .setBackgroundColor(Colors.BG_950)
+    .setSize(groupWidth,40)
+    .disableCollapse()
+    ;
 
     Button saveSVGBtn = 
     controlP5.addButton("saveSVGBtn")
-    .setPosition(marginX,displayGroup.getPosition()[1] + displayGroup.getBackgroundHeight() + 10)
-    .setSize(groupWidth,largeButtonSize[1])
-    .setLabel("Export to SVG")
+    .setPosition(groupInsetX,groupInsetX)
+    .setSize(groupWidth/3-9,largeButtonSize[1])
+    .setLabel("SVG")
     .plugTo(parent,"saveSVG")
+    .setGroup(exportGroup)
     ;
 
     Button savePDFBtn = 
     controlP5.addButton("savePDFBtn")
-    .setPosition(marginX,saveSVGBtn.getPosition()[1] + saveSVGBtn.getHeight() + 10)
-    .setSize(groupWidth,largeButtonSize[1])
-    .setLabel("Export to PDF")
+    .setPosition(saveSVGBtn.getPosition()[0] + saveSVGBtn.getWidth() + 4,10)
+    .setSize(groupWidth/3-9,largeButtonSize[1])
+    .setLabel("PDF")
     .plugTo(parent,"savePDF")
+    .setGroup(exportGroup)
     ;
        
     Button saveOBJBtn = 
     controlP5.addButton("saveOBJBtn")
-    .setPosition(marginX,savePDFBtn.getPosition()[1] + savePDFBtn.getHeight() + 10)
-    .setSize(groupWidth,largeButtonSize[1])
-    .setLabel("Export to OBJ")
+    .setPosition(savePDFBtn.getPosition()[0] + savePDFBtn.getWidth() + 4,10)
+    .setSize(groupWidth/3-9,largeButtonSize[1])
+    .setLabel("OBJ")
     .plugTo(parent,"saveOBJ")
+    .setGroup(exportGroup)
     ;
 
     savePtsBtn = 
     controlP5.addButton("savePtsBtn")
-    .setPosition(marginX,saveOBJBtn.getPosition()[1] + saveOBJBtn.getHeight() + 10)
-    .setSize(groupWidth,largeButtonSize[1])
+    .setPosition(marginX,exportGroup.getPosition()[1] + exportGroup.getBackgroundHeight() + 15)
+    .setSize(groupWidth,largeButtonSize[1] + 10)
     .plugTo(parent,"savePts")
     .setLabel("Save points")
     ;
      
     messageArea = 
     controlP5.addTextarea("messageArea")
-    .setPosition(marginX,savePtsBtn.getPosition()[1] + 30)
+    .setPosition(marginX,savePtsBtn.getPosition()[1] + savePtsBtn.getHeight() + 15)
     .setSize(groupWidth,60)
     .setLineHeight(14)
     .setColor(Colors.ON_BG)

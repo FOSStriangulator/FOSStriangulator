@@ -56,9 +56,7 @@ void saveSvgPdf(String path, String renderer) {
   if (renderer == PDF)
     pgraphics.image(img, 0, 0);
   
-  LinkedHashSet<PVector> pointsDisplay = new LinkedHashSet<PVector>();  
-  pointsDisplay = (LinkedHashSet)points.clone(); 
-  triangles = new DelaunayTriangulator(pointsDisplay).triangulate();
+  triangles = new DelaunayTriangulator(points).triangulate();
   
   for (int i = 0; i < triangles.size(); i++) 
   {
@@ -100,9 +98,7 @@ void objFileSave(File selection)
 
     outputOBJ.println("mtllib " + mtlFileName +"\n");
     
-    LinkedHashSet<PVector> pointsDisplay = new LinkedHashSet<PVector>();   
-    pointsDisplay = (LinkedHashSet)points.clone(); 
-    triangles = new DelaunayTriangulator(pointsDisplay).triangulate();
+    triangles = new DelaunayTriangulator(points).triangulate();
     
     LinkedHashSet<Integer> colorHash = new LinkedHashSet<Integer>();
     for (int i = 0; i < triangles.size(); i++) 
@@ -156,16 +152,9 @@ void objFileSave(File selection)
   }
 }
 
-void pointsFileSelect(File selection)
-{
-  if (selection == null) 
-  {
-    //println("Window was closed or the user hit cancel.");
-  } 
-  else
-  {
-    if (selection.getName().endsWith("txt"))
-    {
+void pointsFileSelect(File selection) {
+  if (selection != null) { // Window not closed or canceled
+    if (selection.getName().endsWith("txt")) {
       // load the image using the given file path
       String lines[] = loadStrings(selection.getPath());     
       String[] width_height = split(lines[0], " ");
@@ -178,22 +167,19 @@ void pointsFileSelect(File selection)
         noLoop();
         
         points = new LinkedHashSet<PVector>();
-        //chosenPointsHash = new LinkedHashSet<PVector>();
         userPointsHash = new LinkedHashSet<PVector>();
         
         for (int i = 1; i < lines.length; i++)
         {
           String[] coords = split(lines[i], ", ");
           String[] coords_x = split(coords[0], "[ ");
-          //println (coords);
           float x_ = parseFloat(coords_x[1]);
           float y_ = parseFloat(coords[1]);
-          //println(lines[i]);
           points.add(new PVector(x_, y_, 0));
-          //int pixelInteger = int(y_*img.width + x_);
-          //chosenPointsHash.add(new PVector(x_, y_, 0));
           userPointsHash.add(new PVector(x_, y_, 0));
         }
+
+        pointsEdited = true;
         loop();
         
         setMessage("Your points have been loaded.", MessageType.SUCCESS);
@@ -288,7 +274,6 @@ void imageFileSelect(File selection)
         //chosenPointsHash = new LinkedHashSet<PVector>();
         userPointsHash = new LinkedHashSet<PVector>();
         points = new LinkedHashSet<PVector>();
-        pointsDisplay = new LinkedHashSet<PVector>();
         
         //standard corner points
         points.add(new PVector(0, 0, 0));
@@ -296,10 +281,11 @@ void imageFileSelect(File selection)
         points.add(new PVector(img.width-1, img.height-1, 0));
         points.add(new PVector(0, img.height-1, 0));
         points.add(new PVector(img.width/2, img.height/2, 0));
+
+        pointsEdited = true;
     
         //chosenPointsHash.addAll(points);
         userPointsHash.addAll(points);
-        pointsDisplay.addAll(points);
         
         contourImgPoints = getThresholdPixels (imgContour, true);
         nonContourPoints = contourImgPoints.get(0);
@@ -344,9 +330,9 @@ void pointsFileSave(File selection)
 
     output.println((img.width) + " " + (img.height));
     
-    for (PVector temp : points)
-    {
-      output.println(temp);
+    for (Iterator<PVector> it = points.iterator(); it.hasNext();) {
+			PVector pt = it.next();
+      output.println(pt);
     }
     
     output.flush();  // Writes the remaining data to the file
