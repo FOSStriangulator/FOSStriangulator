@@ -89,7 +89,7 @@ public void setRandomPts(int pointsNumber) {
   
   noLoop();
   points = pointsTemp;
-  pointsEdited = true;
+  retriangulate();
   loop();
 }
 
@@ -101,7 +101,7 @@ public void setEdgePts(int pointsNumber) {
   
   noLoop();
   points = pointsTemp;
-  pointsEdited = true;
+  retriangulate();
   loop();
 }
 

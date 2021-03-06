@@ -56,16 +56,22 @@ void saveSvgPdf(String path, String renderer) {
   if (renderer == PDF)
     pgraphics.image(img, 0, 0);
   
-  triangles = new DelaunayTriangulator(points).triangulate();
+  delaunator = new Delaunator(pVectorsToFloatArrays(points));
+  float[] ps = delaunator.coords;
+	int[] ts = delaunator.triangles;
   
-  for (int i = 0; i < triangles.size(); i++) 
-  {
-    Triangle2D t = (Triangle2D)triangles.get(i);
+  for (int i = 0; i < ts.length; i += 3) {
+    int p0 = ts[i] * 2;
+    int p1 = ts[i + 1] * 2;
+    int p2 = ts[i + 2] * 2;
+		float tax = ps[p0], tay = ps[p0 + 1],
+				tbx = ps[p1],tby = ps[p1 + 1],
+				tcx = ps[p2], tcy = ps[p2 + 1];
 
-    int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
-    int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
+    int ave_x = int((tax + tbx + tcx)/3);  
+    int ave_y = int((tay + tby + tcy)/3);
     pgraphics.fill( img_b.get(ave_x, ave_y));
-    pgraphics.triangle(t.a.x, t.a.y, t.b.x, t.b.y, t.c.x, t.c.y);
+    pgraphics.triangle(tax, tay, tbx, tby, tcx, tcy);
   }
   pgraphics.dispose();
   pgraphics.endDraw();
@@ -98,15 +104,21 @@ void objFileSave(File selection)
 
     outputOBJ.println("mtllib " + mtlFileName +"\n");
     
-    triangles = new DelaunayTriangulator(points).triangulate();
+    delaunator = new Delaunator(pVectorsToFloatArrays(points));
+    float[] ps = delaunator.coords;
+    int[] ts = delaunator.triangles;
     
     LinkedHashSet<Integer> colorHash = new LinkedHashSet<Integer>();
-    for (int i = 0; i < triangles.size(); i++) 
-    {
-      Triangle2D t = (Triangle2D)triangles.get(i);
+    for (int i = 0; i < ts.length; i += 3) {
+      int p0 = ts[i] * 2;
+      int p1 = ts[i + 1] * 2;
+      int p2 = ts[i + 2] * 2;
+      float tax = ps[p0], tay = ps[p0 + 1],
+        tbx = ps[p1],tby = ps[p1 + 1],
+        tcx = ps[p2], tcy = ps[p2 + 1];
 
-      int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
-      int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
+      int ave_x = int((tax + tbx + tcx)/3);  
+      int ave_y = int((tay + tby + tcy)/3);
       color img_bColor =  img_b.get(ave_x, ave_y);
       
       String colorRGBName = str((img_bColor >> 16) & 0xFF) + "_" + str((img_bColor >> 8) & 0xFF) + "_" + str(img_bColor & 0xFF);
@@ -132,9 +144,9 @@ void objFileSave(File selection)
         outputMTL.println("\tKs 0.349999994 0.349999994 0.349999994\n");
       }
       
-      outputOBJ.println("v " + str(t.a.x) + " " + str(t.a.y) + " 0");
-      outputOBJ.println("v " + str(t.b.x) + " " + str(t.b.y) + " 0");
-      outputOBJ.println("v " + str(t.c.x) + " " + str(t.c.y) + " 0");
+      outputOBJ.println("v " + str(tax) + " " + str(tay) + " 0");
+      outputOBJ.println("v " + str(tbx) + " " + str(tby) + " 0");
+      outputOBJ.println("v " + str(tcx) + " " + str(tcy) + " 0");
       
       outputOBJ.println("vn 0 1 0");
       outputOBJ.println("g triangle_" + str(i));
@@ -179,7 +191,7 @@ void pointsFileSelect(File selection) {
           userPointsHash.add(new PVector(x_, y_, 0));
         }
 
-        pointsEdited = true;
+        retriangulate();
         loop();
         
         setMessage("Your points have been loaded.", MessageType.SUCCESS);
@@ -282,7 +294,7 @@ void imageFileSelect(File selection)
         points.add(new PVector(0, img.height-1, 0));
         points.add(new PVector(img.width/2, img.height/2, 0));
 
-        pointsEdited = true;
+        retriangulate();
     
         //chosenPointsHash.addAll(points);
         userPointsHash.addAll(points);

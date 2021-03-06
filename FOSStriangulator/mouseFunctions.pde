@@ -19,9 +19,8 @@ void mouseMoved() {
 	loop();
 	mappedMouseX = (mouseX/zoom - originX);
 	mappedMouseY = (mouseY/zoom - originY);
-	
 	if (!eraserOn) {
-		hoverPoint = new PVector(mappedMouseX, mappedMouseY, 0);
+		updateHover(new PVector(mappedMouseX, mappedMouseY, 0));
 	}
 }
 

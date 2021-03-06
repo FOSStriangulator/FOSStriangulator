@@ -32,8 +32,6 @@ import java.util.Iterator;
 public int displayMode = Mode.MESH;
 public boolean eraserOn = false;
 
-boolean pointsEdited = false;
-
 //Graphic UI varialbles
 int maxEraserSize = 80;
 int minEraserSize = 1;
@@ -62,8 +60,10 @@ PrintWriter output;
 //Triangulate points and objects 
 ArrayList<PVector> contourPointsList = new ArrayList<PVector>();
 ArrayList<IntList> contourImgPoints;
-ArrayList triangles = new ArrayList();
-ArrayList hoverTriangles = null;
+Delaunator delaunator = null;
+Delaunator hoverDelaunator = null;
+float[] delPoints = null;
+float[] hoverPoints = null;
 
 LinkedHashSet<PVector> userPointsHash = new LinkedHashSet<PVector>();
 LinkedHashSet<PVector> points = new LinkedHashSet<PVector>();
@@ -99,6 +99,8 @@ void setup()
 	points.add(new PVector(img.width-1, img.height-1, 0));
 	points.add(new PVector(0, img.height-1, 0));
 	points.add(new PVector(img.width/2, img.height/2, 0));
+
+  retriangulate();
 	
   userPointsHash.addAll(points);
 	
@@ -135,19 +137,24 @@ void draw()
     
     case Mode.MESH:
       image(img, 0, 0);
-      retriangulate();
       drawTriangleMesh();
       break;
 
     case Mode.RESULT:
       image(img_b, 0, 0);
-      retriangulate();
       drawTriangles();
       break;
   
     default:
       image(img, 0, 0);
       break;
+  }
+
+  if (hoverPoint != null) { // todo remove
+    stroke(Colors.POINT_OUTLINE);
+    strokeWeight(1.5/zoom);
+    fill(255);
+    ellipse(hoverPoint.x, hoverPoint.y, 2.5, 2.5);
   }
 
   if (eraserOn) {

@@ -17,42 +17,67 @@
 void addPoint(float x, float y) {
 	points.add(new PVector(x, y, 0));
 	userPointsHash.add(new PVector(x, y, 0));
-	pointsEdited = true;
+	retriangulate();
 }
 
 void eraseArea(float x, float y) {
-	for (Iterator<PVector> it = points.iterator(); it.hasNext();) {
+	for (Iterator < PVector > it = points.iterator(); it.hasNext();) {
 		PVector p = it.next();
 		float d = dist(x, y, p.x, p.y);
-		if ( d < eraserSize ) {
+		if (d < eraserSize) {
 			userPointsHash.remove(p);
 			it.remove();
 		}
 	}
-
-	pointsEdited = true;
+	
+	retriangulate();
 }
 
 void cancelHover() {
 	hoverPoint = null;
-    hoverTriangles = null;
+	hoverDelaunator = null;
 }
 
 void retriangulate() {
-	// triangles
-	if (pointsEdited) {
-		triangles = new DelaunayTriangulator(points).triangulate(); // todo store DelaunayTriangulator, get rid of triangles // todo use points
-		pointsEdited = false;
-	}
-
-	// hover triangles
-	if (hoverPoint != null) { //todo could use a different optimized Delaunay algorithm that allows quick addition without triangulating from the beginning
-		ArrayList tempPoints = new ArrayList<PVector>(points.size() + 1);
-		for (Iterator<PVector> it = points.iterator(); it.hasNext();) {
-			PVector pt = it.next();
-			tempPoints.add(new PVector(pt.x, pt.y));
+	delPoints = pVectorsToFloatArrays(points);
+	delaunator = new Delaunator(delPoints);
+	
+	// create hover points
+	if (hoverPoint != null) {
+		float[] tempPoints = new float[delPoints.length + 2];
+		for (int i = 0; i < delPoints.length; i++) {
+			tempPoints[i] = delPoints[i];
 		}
-		tempPoints.add(hoverPoint);
-		hoverTriangles = new DelaunayTriangulator(tempPoints).triangulate();
+		tempPoints[delPoints.length] = hoverPoint.x;
+		tempPoints[delPoints.length + 1] = hoverPoint.y;
+		hoverPoints = tempPoints;
+		hoverDelaunator = new Delaunator(hoverPoints);
 	}
+}
+
+void updateHover(PVector point) {
+	hoverPoint = point;
+	if (hoverPoint != null) {
+		if (hoverDelaunator != null) {
+			hoverPoints[delPoints.length] = hoverPoint.x;
+			hoverPoints[delPoints.length + 1] = hoverPoint.y;
+			hoverDelaunator.update();
+		} else {
+			retriangulate();
+		}
+	}
+}
+
+float[] pVectorsToFloatArrays(LinkedHashSet<PVector> pointSet) {
+	float[] res = new float[pointSet.size() * 2];
+	
+	int i = 0;
+	for (Iterator < PVector > it = pointSet.iterator(); it.hasNext();) {
+		PVector pvector = it.next();
+		res[i] = pvector.x;
+		res[i + 1] = pvector.y;
+		i += 2;
+	}
+	
+	return res;
 }

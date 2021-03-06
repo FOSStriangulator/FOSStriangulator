@@ -39,50 +39,68 @@ void drawTriangleMesh () {
 	strokeWeight(0.7/zoom);
 	stroke(Colors.POINT_OUTLINE);
 
-	ArrayList<Triangle2D> drawnTriangles = (hoverTriangles != null) ? hoverTriangles : triangles;
+	Delaunator drawnDelaunator = (hoverPoint != null) ? hoverDelaunator : delaunator;
+	if (drawnDelaunator != null) {
+		float[] ps = drawnDelaunator.coords;
+		int[] ts = drawnDelaunator.triangles;
 
-	for (Iterator<Triangle2D> it = drawnTriangles.iterator(); it.hasNext();) {
-		Triangle2D t = it.next();
-		vertex(t.a.x, t.a.y);
-		vertex(t.b.x, t.b.y);
-		vertex(t.c.x, t.c.y);
+		// todo could this change mid-draw?
+		for (int i = 0; i < ts.length; i += 3) {
+			int p0 = ts[i] * 2;
+			int p1 = ts[i + 1] * 2;
+			int p2 = ts[i + 2] * 2;
+			vertex(ps[p0], ps[p0 + 1]);
+			vertex(ps[p1], ps[p1 + 1]);
+			vertex(ps[p2], ps[p2 + 1]);
+		}
+
+		endShape();
 	}
-	endShape();
 }
+
 
 void drawTriangles () {
 	noStroke();
 	beginShape(TRIANGLES);
 
-	ArrayList<Triangle2D> drawnTriangles = (hoverTriangles != null) ? hoverTriangles : triangles;
+	Delaunator drawnDelaunator = (hoverPoint != null) ? hoverDelaunator : delaunator;
+	if (drawnDelaunator != null) {
+		float[] ps = drawnDelaunator.coords;
+		int[] ts = drawnDelaunator.triangles;
 
-	for (Iterator<Triangle2D> it = drawnTriangles.iterator(); it.hasNext();) {
-		Triangle2D t = it.next();
-		int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
-		int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
-		
-		if (notInsideImage(ave_x,ave_y)) {
-			PVector imgEdgeIntersection = lineIntersectionBox(new PVector (ave_x,ave_y), new PVector (img.width/2,img.height/2), new PVector (1.0, 1.0), new PVector (img.width-1,img.height-1));
-			fill(img_b.get(floor(imgEdgeIntersection.x), floor(imgEdgeIntersection.y)), 255);
+		for (int i = 0; i < ts.length; i += 3) {
+			int p0 = ts[i] * 2;
+			int p1 = ts[i + 1] * 2;
+			int p2 = ts[i + 2] * 2;
+			float tax = ps[p0], tay = ps[p0 + 1],
+				tbx = ps[p1],tby = ps[p1 + 1],
+				tcx = ps[p2], tcy = ps[p2 + 1];
+			int ave_x = int((tax + tbx + tcx)/3);
+			int ave_y = int((tay + tby + tcy)/3);
+			
+			if (notInsideImage(ave_x,ave_y)) {
+				PVector imgEdgeIntersection = lineIntersectionBox(new PVector (ave_x,ave_y), new PVector (img.width/2,img.height/2), new PVector (1.0, 1.0), new PVector (img.width-1,img.height-1));
+				fill(img_b.get(floor(imgEdgeIntersection.x), floor(imgEdgeIntersection.y)), 255);
+			}
+			else {
+				fill(img_b.get(ave_x, ave_y), 255);
+			}
+			vertex(tax, tay);
+			vertex(tbx, tby);
+			vertex(tcx, tcy);
+			
+			//testing image intersection
+			//if (notInsideImage(ave_x,ave_y))
+			//{
+			// fill(255,0,0);
+			// stroke(255,0,0);
+			// ellipse(ave_x,ave_y,5,5);
+			// text( (str(ave_x) +" " + str(ave_y)) ,ave_x,ave_y);
+			// line(ave_x,ave_y,img.width/2,img.height/2);
+			// PVector imgEdgeIntersection = lineIntersectionBox(new PVector (ave_x,ave_y), new PVector (img.width/2,img.height/2), new PVector (0.0, 0.0), new PVector (img.width,img.height));
+			// ellipse(imgEdgeIntersection.x,imgEdgeIntersection.y,5,5);
+			//}
 		}
-		else {
-			fill(img_b.get(ave_x, ave_y), 255);
-		}
-		vertex(t.a.x, t.a.y);
-		vertex(t.b.x, t.b.y);
-		vertex(t.c.x, t.c.y);
-		
-		//testing image intersection
-		//if (notInsideImage(ave_x,ave_y))
-		//{
-		//  fill(255,0,0);
-		//  stroke(255,0,0);
-		//  ellipse(ave_x,ave_y,5,5);
-		//  text( (str(ave_x) +" " + str(ave_y)) ,ave_x,ave_y);
-		//  line(ave_x,ave_y,img.width/2,img.height/2);
-		//  PVector imgEdgeIntersection = lineIntersectionBox(new PVector (ave_x,ave_y), new PVector (img.width/2,img.height/2), new PVector (0.0, 0.0), new PVector (img.width,img.height));
-		//  ellipse(imgEdgeIntersection.x,imgEdgeIntersection.y,5,5);
-		//}
+		endShape();
 	}
-	endShape();
 }
