@@ -23,11 +23,11 @@ interpolate edge colour
 */
 
 import java.util.LinkedHashSet;
+import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import processing.pdf.*;
 import processing.svg.*;
 import controlP5.*;
-import java.awt.image.BufferedImage;
-import java.util.Iterator;
 
 public int displayMode = Mode.MESH;
 public boolean eraserOn = false;
@@ -75,14 +75,8 @@ IntList nonContourPoints = new IntList();
 void setup()
 {
   zoom = 1.0;
-  img = loadImage("assets/instructions.png");
-  icon = loadImage("assets/icon.png");
-
-  /*
-  For flatpaks, use:
-	img = loadImage("/app/share/instructions.png");
-  icon = loadImage("/app/share/icon.png");
-  */
+  img = loadImage(ASSETS_DIR + "instructions.png");
+  icon = loadImage(ASSETS_DIR + "icon.png");
 
 	img_b = img.get();
 	imgContour = contourImage(img_b, 1,80);

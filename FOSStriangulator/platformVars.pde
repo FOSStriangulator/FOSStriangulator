@@ -1,0 +1,1 @@
+final String ASSETS_DIR = "assets/";
