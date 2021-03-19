@@ -34,7 +34,7 @@ import processing.core.PVector;
  * 
  * @author Johannes Diemke
  */
-public class Edge2D {
+public class DTEdge {
 
     public PVector a;
     public PVector b;
@@ -48,7 +48,7 @@ public class Edge2D {
      * @param b
      *            The second vertex of the edge
      */
-    public Edge2D(PVector a, PVector b) {
+    public DTEdge(PVector a, PVector b) {
         this.a = a;
         this.b = b;
     }

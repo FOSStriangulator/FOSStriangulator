@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.LinkedHashSet;
 import java.util.Iterator;
-import processing.core.PVector;
 
 /**
  * A Java implementation of an incremental 2D Delaunay triangulation algorithm.
@@ -42,7 +41,7 @@ import processing.core.PVector;
 public class DelaunayTriangulator {
 
     private List<PVector> pointSet;
-    private TriangleSoup triangleSoup;
+    private DTTriangleSoup triangleSoup;
 
     /**
      * Constructor of the SimpleDelaunayTriangulator class used to create a new
@@ -52,7 +51,7 @@ public class DelaunayTriangulator {
      */
     public DelaunayTriangulator(List<PVector> pointSet) {
         this.pointSet = pointSet;
-        this.triangleSoup = new TriangleSoup();
+        this.triangleSoup = new DTTriangleSoup();
     }
 
     public DelaunayTriangulator(LinkedHashSet<PVector> pPoints) {
@@ -61,15 +60,15 @@ public class DelaunayTriangulator {
             PVector pvector = it.next();
             pointSet.add(new PVector(pvector.x, pvector.y));
         }
-        this.triangleSoup = new TriangleSoup();
+        this.triangleSoup = new DTTriangleSoup();
     }
 
     /**
      * This method generates a Delaunay triangulation from the specified point
      * set.
      */
-    public ArrayList<Triangle2D> triangulate() {
-        triangleSoup = new TriangleSoup();
+    public ArrayList<DTTriangle> triangulate() {
+        triangleSoup = new DTTriangleSoup();
 
         /**
          * In order for the in circumcircle test to not consider the vertices of
@@ -90,16 +89,16 @@ public class DelaunayTriangulator {
         PVector p2 = new PVector(3.0f * maxOfAnyCoordinate, 0.0f);
         PVector p3 = new PVector(-3.0f * maxOfAnyCoordinate, -3.0f * maxOfAnyCoordinate);
 
-        Triangle2D superTriangle = new Triangle2D(p1, p2, p3);
+        DTTriangle superTriangle = new DTTriangle(p1, p2, p3);
 
         triangleSoup.add(superTriangle);
 
         if (pointSet == null || pointSet.size() < 3) {
-            return new ArrayList<Triangle2D>(triangleSoup.getTriangles());
+            return new ArrayList<DTTriangle>(triangleSoup.getTriangles());
         }
 
         for (int i = 0; i < pointSet.size(); i++) {
-            Triangle2D triangle = triangleSoup.findContainingTriangle(pointSet.get(i));
+            DTTriangle triangle = triangleSoup.findContainingTriangle(pointSet.get(i));
 
             if (triangle == null) {
                 /**
@@ -110,10 +109,10 @@ public class DelaunayTriangulator {
                  * which is nearest to the point we try to add. This edge is
                  * removed and four new edges are added.
                  */
-                Edge2D edge = triangleSoup.findNearestEdge(pointSet.get(i));
+                DTEdge edge = triangleSoup.findNearestEdge(pointSet.get(i));
 
-                Triangle2D first = triangleSoup.findOneTriangleSharing(edge);
-                Triangle2D second = triangleSoup.findNeighbour(first, edge);
+                DTTriangle first = triangleSoup.findOneTriangleSharing(edge);
+                DTTriangle second = triangleSoup.findNeighbour(first, edge);
 
                 PVector firstNoneEdgeVertex = first.getNoneEdgeVertex(edge);
                 PVector secondNoneEdgeVertex = second.getNoneEdgeVertex(edge);
@@ -121,20 +120,20 @@ public class DelaunayTriangulator {
                 triangleSoup.remove(first);
                 triangleSoup.remove(second);
 
-                Triangle2D triangle1 = new Triangle2D(edge.a, firstNoneEdgeVertex, pointSet.get(i));
-                Triangle2D triangle2 = new Triangle2D(edge.b, firstNoneEdgeVertex, pointSet.get(i));
-                Triangle2D triangle3 = new Triangle2D(edge.a, secondNoneEdgeVertex, pointSet.get(i));
-                Triangle2D triangle4 = new Triangle2D(edge.b, secondNoneEdgeVertex, pointSet.get(i));
+                DTTriangle triangle1 = new DTTriangle(edge.a, firstNoneEdgeVertex, pointSet.get(i));
+                DTTriangle triangle2 = new DTTriangle(edge.b, firstNoneEdgeVertex, pointSet.get(i));
+                DTTriangle triangle3 = new DTTriangle(edge.a, secondNoneEdgeVertex, pointSet.get(i));
+                DTTriangle triangle4 = new DTTriangle(edge.b, secondNoneEdgeVertex, pointSet.get(i));
 
                 triangleSoup.add(triangle1);
                 triangleSoup.add(triangle2);
                 triangleSoup.add(triangle3);
                 triangleSoup.add(triangle4);
 
-                legalizeEdge(triangle1, new Edge2D(edge.a, firstNoneEdgeVertex), pointSet.get(i));
-                legalizeEdge(triangle2, new Edge2D(edge.b, firstNoneEdgeVertex), pointSet.get(i));
-                legalizeEdge(triangle3, new Edge2D(edge.a, secondNoneEdgeVertex), pointSet.get(i));
-                legalizeEdge(triangle4, new Edge2D(edge.b, secondNoneEdgeVertex), pointSet.get(i));
+                legalizeEdge(triangle1, new DTEdge(edge.a, firstNoneEdgeVertex), pointSet.get(i));
+                legalizeEdge(triangle2, new DTEdge(edge.b, firstNoneEdgeVertex), pointSet.get(i));
+                legalizeEdge(triangle3, new DTEdge(edge.a, secondNoneEdgeVertex), pointSet.get(i));
+                legalizeEdge(triangle4, new DTEdge(edge.b, secondNoneEdgeVertex), pointSet.get(i));
             } else {
                 /**
                  * The vertex is inside a triangle.
@@ -145,21 +144,21 @@ public class DelaunayTriangulator {
 
                 triangleSoup.remove(triangle);
 
-                Triangle2D first = new Triangle2D(a, b, pointSet.get(i));
-                Triangle2D second = new Triangle2D(b, c, pointSet.get(i));
-                Triangle2D third = new Triangle2D(c, a, pointSet.get(i));
+                DTTriangle first = new DTTriangle(a, b, pointSet.get(i));
+                DTTriangle second = new DTTriangle(b, c, pointSet.get(i));
+                DTTriangle third = new DTTriangle(c, a, pointSet.get(i));
 
                 triangleSoup.add(first);
                 triangleSoup.add(second);
                 triangleSoup.add(third);
 
-                legalizeEdge(first, new Edge2D(a, b), pointSet.get(i));
-                legalizeEdge(second, new Edge2D(b, c), pointSet.get(i));
-                legalizeEdge(third, new Edge2D(c, a), pointSet.get(i));
+                legalizeEdge(first, new DTEdge(a, b), pointSet.get(i));
+                legalizeEdge(second, new DTEdge(b, c), pointSet.get(i));
+                legalizeEdge(third, new DTEdge(c, a), pointSet.get(i));
             }
         }
 
-        return new ArrayList<Triangle2D>(triangleSoup.getTriangles());
+        return new ArrayList<DTTriangle>(triangleSoup.getTriangles());
     }
 
     /**
@@ -172,8 +171,8 @@ public class DelaunayTriangulator {
      * @param newVertex
      *            The new vertex
      */
-    private void legalizeEdge(Triangle2D triangle, Edge2D edge, PVector newVertex) {
-        Triangle2D neighbourTriangle = triangleSoup.findNeighbour(triangle, edge);
+    private void legalizeEdge(DTTriangle triangle, DTEdge edge, PVector newVertex) {
+        DTTriangle neighbourTriangle = triangleSoup.findNeighbour(triangle, edge);
 
         /**
          * If the triangle has a neighbor, then legalize the edge
@@ -185,14 +184,14 @@ public class DelaunayTriangulator {
 
                 PVector noneEdgeVertex = neighbourTriangle.getNoneEdgeVertex(edge);
 
-                Triangle2D firstTriangle = new Triangle2D(noneEdgeVertex, edge.a, newVertex);
-                Triangle2D secondTriangle = new Triangle2D(noneEdgeVertex, edge.b, newVertex);
+                DTTriangle firstTriangle = new DTTriangle(noneEdgeVertex, edge.a, newVertex);
+                DTTriangle secondTriangle = new DTTriangle(noneEdgeVertex, edge.b, newVertex);
 
                 triangleSoup.add(firstTriangle);
                 triangleSoup.add(secondTriangle);
 
-                legalizeEdge(firstTriangle, new Edge2D(noneEdgeVertex, edge.a), newVertex);
-                legalizeEdge(secondTriangle, new Edge2D(noneEdgeVertex, edge.b), newVertex);
+                legalizeEdge(firstTriangle, new DTEdge(noneEdgeVertex, edge.a), newVertex);
+                legalizeEdge(secondTriangle, new DTEdge(noneEdgeVertex, edge.b), newVertex);
             }
         }
     }
@@ -235,7 +234,7 @@ public class DelaunayTriangulator {
      * 
      * @return Returns the triangles of the triangulation.
      */
-    public List<Triangle2D> getTriangles() {
+    public List<DTTriangle> getTriangles() {
         return triangleSoup.getTriangles();
     }
 

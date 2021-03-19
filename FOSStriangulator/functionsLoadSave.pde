@@ -60,7 +60,7 @@ void saveSvgPdf(String path, String renderer) {
   
   for (int i = 0; i < triangles.size(); i++) 
   {
-    Triangle2D t = (Triangle2D)triangles.get(i);
+    DTTriangle t = (DTTriangle)triangles.get(i);
 
     int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
     int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
@@ -103,7 +103,7 @@ void objFileSave(File selection)
     LinkedHashSet<Integer> colorHash = new LinkedHashSet<Integer>();
     for (int i = 0; i < triangles.size(); i++) 
     {
-      Triangle2D t = (Triangle2D)triangles.get(i);
+      DTTriangle t = (DTTriangle)triangles.get(i);
 
       int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
       int ave_y = int((t.a.y + t.b.y + t.c.y)/3);

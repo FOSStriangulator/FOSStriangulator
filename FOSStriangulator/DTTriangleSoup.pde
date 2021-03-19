@@ -31,23 +31,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Iterator;
-import processing.core.PVector;
 
 /**
- * Triangle2D soup class implementation.
+ * DTTriangle soup class implementation.
  * 
  * @author Johannes Diemke
  */
-class TriangleSoup {
+class DTTriangleSoup {
 
-    private List<Triangle2D> triangleSoup;
+    private List<DTTriangle> triangleSoup;
 
     /**
      * Constructor of the triangle soup class used to create a new triangle soup
      * instance.
      */
-    public TriangleSoup() {
-        this.triangleSoup = new ArrayList<Triangle2D>();
+    public DTTriangleSoup() {
+        this.triangleSoup = new ArrayList<DTTriangle>();
     }
 
     /**
@@ -56,7 +55,7 @@ class TriangleSoup {
      * @param triangle
      *            The triangle to be added to this triangle soup
      */
-    public void add(Triangle2D triangle) {
+    public void add(DTTriangle triangle) {
         this.triangleSoup.add(triangle);
     }
 
@@ -66,7 +65,7 @@ class TriangleSoup {
      * @param triangle
      *            The triangle to be removed from this triangle soup
      */
-    public void remove(Triangle2D triangle) {
+    public void remove(DTTriangle triangle) {
         this.triangleSoup.remove(triangle);
     }
 
@@ -75,7 +74,7 @@ class TriangleSoup {
      * 
      * @return The triangles from this triangle soup
      */
-    public List<Triangle2D> getTriangles() {
+    public List<DTTriangle> getTriangles() {
         return this.triangleSoup;
     }
 
@@ -88,9 +87,9 @@ class TriangleSoup {
      * @return Returns the triangle from this triangle soup that contains the
      *         specified point or null
      */
-    public Triangle2D findContainingTriangle(PVector point) {
-        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
-            Triangle2D triangle = it.next();
+    public DTTriangle findContainingTriangle(PVector point) {
+        for (Iterator<DTTriangle> it = triangleSoup.iterator(); it.hasNext();) {
+            DTTriangle triangle = it.next();
             if (triangle.contains(point)) {
                 return triangle;
             }
@@ -110,9 +109,9 @@ class TriangleSoup {
      * @return The triangles neighbor triangle sharing the same edge or null if
      *         no triangle exists
      */
-    public Triangle2D findNeighbour(Triangle2D triangle, Edge2D edge) {
-        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
-            Triangle2D triangleFromSoup = it.next();
+    public DTTriangle findNeighbour(DTTriangle triangle, DTEdge edge) {
+        for (Iterator<DTTriangle> it = triangleSoup.iterator(); it.hasNext();) {
+            DTTriangle triangleFromSoup = it.next();
             if (triangleFromSoup.isNeighbour(edge) && triangleFromSoup != triangle) {
                 return triangleFromSoup;
             }
@@ -124,15 +123,15 @@ class TriangleSoup {
      * Returns one of the possible triangles sharing the specified edge. Based
      * on the ordering of the triangles in this triangle soup the returned
      * triangle may differ. To find the other triangle that shares this edge use
-     * the {@link findNeighbour(Triangle2D triangle, Edge2D edge)} method.
+     * the {@link findNeighbour(DTTriangle triangle, DTEdge edge)} method.
      * 
      * @param edge
      *            The edge
      * @return Returns one triangle that shares the specified edge
      */
-    public Triangle2D findOneTriangleSharing(Edge2D edge) {
-        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
-            Triangle2D triangle = it.next();
+    public DTTriangle findOneTriangleSharing(DTEdge edge) {
+        for (Iterator<DTTriangle> it = triangleSoup.iterator(); it.hasNext();) {
+            DTTriangle triangle = it.next();
             if (triangle.isNeighbour(edge)) {
                 return triangle;
             }
@@ -147,15 +146,15 @@ class TriangleSoup {
      *            The point
      * @return The edge from the triangle soup nearest to the specified point
      */
-    public Edge2D findNearestEdge(PVector point) {
-        List<EdgeDistancePack> edgeList = new ArrayList<EdgeDistancePack>();
+    public DTEdge findNearestEdge(PVector point) {
+        List<DTEdgeDistancePack> edgeList = new ArrayList<DTEdgeDistancePack>();
 
-        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
-            Triangle2D triangle = it.next();
+        for (Iterator<DTTriangle> it = triangleSoup.iterator(); it.hasNext();) {
+            DTTriangle triangle = it.next();
             edgeList.add(triangle.findNearestEdge(point));
         }
 
-        EdgeDistancePack[] edgeDistancePacks = new EdgeDistancePack[edgeList.size()];
+        DTEdgeDistancePack[] edgeDistancePacks = new DTEdgeDistancePack[edgeList.size()];
         edgeList.toArray(edgeDistancePacks);
 
         Arrays.sort(edgeDistancePacks);
@@ -170,10 +169,10 @@ class TriangleSoup {
      *            The vertex
      */
     public void removeTrianglesUsing(PVector vertex) {
-        List<Triangle2D> trianglesToBeRemoved = new ArrayList<Triangle2D>();
+        List<DTTriangle> trianglesToBeRemoved = new ArrayList<DTTriangle>();
 
-        for (Iterator<Triangle2D> it = triangleSoup.iterator(); it.hasNext();) {
-            Triangle2D triangle = it.next();
+        for (Iterator<DTTriangle> it = triangleSoup.iterator(); it.hasNext();) {
+            DTTriangle triangle = it.next();
             if (triangle.hasVertex(vertex)) {
                 trianglesToBeRemoved.add(triangle);
             }

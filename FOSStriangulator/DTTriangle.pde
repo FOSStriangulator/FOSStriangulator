@@ -27,7 +27,6 @@
 
 // package io.github.jdiemke.triangulation;
 
-import processing.core.PVector;
 import java.util.Arrays;
 
 /**
@@ -35,7 +34,7 @@ import java.util.Arrays;
  * 
  * @author Johannes Diemke
  */
-public class Triangle2D {
+public class DTTriangle {
 
     public PVector a;
     public PVector b;
@@ -52,7 +51,7 @@ public class Triangle2D {
      * @param c
      *            The third vertex of the triangle
      */
-    public Triangle2D(PVector a, PVector b, PVector c) {
+    public DTTriangle(PVector a, PVector b, PVector c) {
         this.a = a;
         this.b = b;
         this.c = c;
@@ -150,7 +149,7 @@ public class Triangle2D {
      *            The edge to be tested
      * @return Returns true if this triangle contains the edge
      */
-    public boolean isNeighbour(Edge2D edge) {
+    public boolean isNeighbour(DTEdge edge) {
         return (a == edge.a || b == edge.a || c == edge.a) && (a == edge.b || b == edge.b || c == edge.b);
     }
 
@@ -161,7 +160,7 @@ public class Triangle2D {
      *            The edge
      * @return The vertex of this triangle that is not part of the edge
      */
-    public PVector getNoneEdgeVertex(Edge2D edge) {
+    public PVector getNoneEdgeVertex(DTEdge edge) {
         if (a != edge.a && a != edge.b) {
             return a;
         } else if (b != edge.a && b != edge.b) {
@@ -191,22 +190,22 @@ public class Triangle2D {
     }
 
     /**
-     * Returns an EdgeDistancePack containing the edge and its distance nearest
+     * Returns an DTEdgeDistancePack containing the edge and its distance nearest
      * to the specified point.
      * 
      * @param point
      *            The point the nearest edge is queried for
      * @return The edge of this triangle that is nearest to the specified point
      */
-    public EdgeDistancePack findNearestEdge(PVector point) {
-        EdgeDistancePack[] edges = new EdgeDistancePack[3];
+    public DTEdgeDistancePack findNearestEdge(PVector point) {
+        DTEdgeDistancePack[] edges = new DTEdgeDistancePack[3];
 
-        edges[0] = new EdgeDistancePack(new Edge2D(a, b),
-                PVector.sub(computeClosestPoint(new Edge2D(a, b), point),point).mag());
-        edges[1] = new EdgeDistancePack(new Edge2D(b, c),
-                PVector.sub(computeClosestPoint(new Edge2D(b, c), point),point).mag());
-        edges[2] = new EdgeDistancePack(new Edge2D(c, a),
-                PVector.sub(computeClosestPoint(new Edge2D(c, a), point),point).mag());
+        edges[0] = new DTEdgeDistancePack(new DTEdge(a, b),
+                PVector.sub(computeClosestPoint(new DTEdge(a, b), point),point).mag());
+        edges[1] = new DTEdgeDistancePack(new DTEdge(b, c),
+                PVector.sub(computeClosestPoint(new DTEdge(b, c), point),point).mag());
+        edges[2] = new DTEdgeDistancePack(new DTEdge(c, a),
+                PVector.sub(computeClosestPoint(new DTEdge(c, a), point),point).mag());
 
         Arrays.sort(edges);
         return edges[0];
@@ -222,7 +221,7 @@ public class Triangle2D {
      *            The point to which we search the closest point on the edge
      * @return The closest point on the given edge to the specified point
      */
-    private PVector computeClosestPoint(Edge2D edge, PVector point) {
+    private PVector computeClosestPoint(DTEdge edge, PVector point) {
         PVector ab = PVector.sub(edge.b, edge.a);
         float t = PVector.sub(point,edge.a).dot(ab) / ab.dot(ab);
 
@@ -250,7 +249,7 @@ public class Triangle2D {
 
     @Override
     public String toString() {
-        return "Triangle2D[" + a + ", " + b + ", " + c + "]";
+        return "DTTriangle[" + a + ", " + b + ", " + c + "]";
     }
 
 }

@@ -39,10 +39,10 @@ void drawTriangleMesh () {
 	strokeWeight(0.7/zoom);
 	stroke(Colors.POINT_OUTLINE);
 
-	ArrayList<Triangle2D> drawnTriangles = (hoverTriangles != null) ? hoverTriangles : triangles;
+	ArrayList<DTTriangle> drawnTriangles = (hoverTriangles != null) ? hoverTriangles : triangles;
 
-	for (Iterator<Triangle2D> it = drawnTriangles.iterator(); it.hasNext();) {
-		Triangle2D t = it.next();
+	for (Iterator<DTTriangle> it = drawnTriangles.iterator(); it.hasNext();) {
+		DTTriangle t = it.next();
 		vertex(t.a.x, t.a.y);
 		vertex(t.b.x, t.b.y);
 		vertex(t.c.x, t.c.y);
@@ -54,10 +54,10 @@ void drawTriangles () {
 	noStroke();
 	beginShape(TRIANGLES);
 
-	ArrayList<Triangle2D> drawnTriangles = (hoverTriangles != null) ? hoverTriangles : triangles;
+	ArrayList<DTTriangle> drawnTriangles = (hoverTriangles != null) ? hoverTriangles : triangles;
 
-	for (Iterator<Triangle2D> it = drawnTriangles.iterator(); it.hasNext();) {
-		Triangle2D t = it.next();
+	for (Iterator<DTTriangle> it = drawnTriangles.iterator(); it.hasNext();) {
+		DTTriangle t = it.next();
 		int ave_x = int((t.a.x + t.b.x + t.c.x)/3);  
 		int ave_y = int((t.a.y + t.b.y + t.c.y)/3);
 		
