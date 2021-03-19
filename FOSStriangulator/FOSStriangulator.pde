@@ -155,6 +155,14 @@ void keyPressed()
   if (key == CODED) {
     codedKeyPressed(keyCode);
   } else {
-    globalKeyPressed(key);
+    if (key == ' ') {
+      if (eraserOn) {
+        eraseArea(mappedMouseX, mappedMouseY);
+      } else {
+        addPoint(mappedMouseX, mappedMouseY);
+      }
+    } else {
+      globalKeyPressed(key);
+    }
   }
 }
