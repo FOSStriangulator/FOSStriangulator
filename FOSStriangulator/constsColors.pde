@@ -15,7 +15,7 @@
 // along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
 
 interface Colors {
-  int
+  final int
   ACCENT_700 = 0xff0097A7,
   ACCENT_800 = 0xff00838F, 
   ON_BG = 0xffffffff,

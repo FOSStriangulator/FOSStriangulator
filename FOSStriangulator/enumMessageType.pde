@@ -14,17 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FOSStriangulator. If not, see <http://www.gnu.org/licenses/>.
 
-interface Mode {
-	int
-	IMAGE = -1,
-	POINTS = 0,
-	MESH = 1, 
-	CONTOUR = 2,
-	RESULT = 3;
-}
-
 interface MessageType {
-	int
+	final int
 	INFO = 0,
 	STATUS = 1,
 	SUCCESS = 2,

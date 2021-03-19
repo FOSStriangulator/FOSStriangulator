@@ -75,8 +75,8 @@ IntList nonContourPoints = new IntList();
 void setup()
 {
   zoom = 1.0;
-  img = loadImage(ASSETS_DIR + "instructions.png");
-  icon = loadImage(ASSETS_DIR + "icon.png");
+  img = loadImage(Platform.ASSETS_DIR + "instructions.png");
+  icon = loadImage(Platform.ASSETS_DIR + "icon.png");
 
 	img_b = img.get();
 	imgContour = contourImage(img_b, 1,80);
