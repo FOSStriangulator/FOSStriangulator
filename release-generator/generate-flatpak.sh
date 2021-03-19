@@ -6,8 +6,8 @@ TEMPDIR="$SCRIPTDIR/temp-fosstriangulator-flatpak"
 
 mkdir "$TEMPDIR"
 
-mv "$SRCDIR/platformVars.pde" $TEMPDIR
-cp "$SCRIPTDIR/flatpak-src/platformVars.pde" $SRCDIR
+mv "$SRCDIR/constsPlatform.pde" $TEMPDIR
+cp "$SCRIPTDIR/flatpak-src/constsPlatform.pde" $SRCDIR
 
 # Generate JAR
 
@@ -17,8 +17,8 @@ if [ "$#" -eq 1 ]; then
 else
 	$(cd "$TEMPDIR" && "$SCRIPTDIR"/generate-jar.sh)
 fi
-rm "$SRCDIR/platformVars.pde"
-mv "$TEMPDIR/platformVars.pde" $SRCDIR
+rm "$SRCDIR/constsPlatform.pde"
+mv "$TEMPDIR/constsPlatform.pde" $SRCDIR
 
 # Copy over other files
 cp "$SCRIPTDIR/flatpak-src/FOSStriangulator" $TEMPDIR

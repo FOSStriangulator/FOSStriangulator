@@ -1,4 +1,4 @@
 interface Platform {
 	final String
-	ASSETS_DIR = "assets/";
+	ASSETS_DIR = "/app/share/";
 }
