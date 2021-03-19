@@ -16,13 +16,13 @@
 
 void globalKeyPressed(char key) {
   switch (key) {
-    case ' ': // todo test + make sure it doesn't result in concurrent exception
-      if (eraserOn) {
-        eraseArea(mappedMouseX, mappedMouseY);
-      } else {
-        addPoint(mappedMouseX, mappedMouseY);
-      }
-      break;
+    // case ' ': // todo leads to concurrent exception; fix by using QTree for adding, array for drawing
+    //   if (eraserOn) {
+    //     eraseArea(mappedMouseX, mappedMouseY);
+    //   } else {
+    //     addPoint(mappedMouseX, mappedMouseY);
+    //   }
+    //   break;
     case 'p':
     case 'P':
       displayMode = Mode.POINTS;

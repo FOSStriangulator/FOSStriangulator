@@ -15,12 +15,15 @@
 // along with FOSStriangulator. If not, see <http://www.gnu.org/licenses/>.
 
 void addPoint(float x, float y) {
+	noLoop();
 	points.add(new PVector(x, y, 0));
 	userPointsHash.add(new PVector(x, y, 0));
 	pointsEdited = true;
+	loop();
 }
 
 void eraseArea(float x, float y) {
+	noLoop();
 	for (Iterator<PVector> it = points.iterator(); it.hasNext();) {
 		PVector p = it.next();
 		float d = dist(x, y, p.x, p.y);
@@ -29,8 +32,8 @@ void eraseArea(float x, float y) {
 			it.remove();
 		}
 	}
-
 	pointsEdited = true;
+	loop();
 }
 
 void cancelHover() {
