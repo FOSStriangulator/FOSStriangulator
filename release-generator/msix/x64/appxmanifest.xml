@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
-  <Identity Name="EnjoyingFOSS.FOSStriangulator" Version="2.0.0.0" Publisher="CN=Enjoying FOSS, O=Enjoying FOSS, L=Prague, C=CZ" ProcessorArchitecture="x64" />
+  <Identity Name="45456EnjoyingFOSS.FOSStriangulator" Version="2.0.0.0" Publisher="CN=19EDE651-25EE-494A-A482-06053DA81A58" ProcessorArchitecture="x64" />
   <Properties>
     <DisplayName>FOSStriangulator</DisplayName>
     <PublisherDisplayName>Enjoying FOSS</PublisherDisplayName>
