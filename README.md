@@ -8,7 +8,7 @@ Based on [Concept Farm](https://www.conceptfarm.ca/)'s [Image Triangulator](http
 
 [<img src="https://www.flathub.org/assets/badges/flathub-badge-en.png" alt="Download FOSStriangulator Flatpak on Flathub" height="108">](https://flathub.org/apps/details/org.enjoyingfoss.FOSStriangulator) <a href='//www.microsoft.com/store/apps/9n6mf3dngr9q?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width='284' height='104'/></a>
 
-Alternatively, you can also download a ZIP containing a JAR file from the [Releases page](https://github.com/FOSStriangulator/FOSStriangulator/releases).
+Alternatively, you can download a ZIP containing a JAR file from the [Releases page](https://github.com/FOSStriangulator/FOSStriangulator/releases).
 
 ## Contribute
 
