@@ -57,7 +57,7 @@ void mouseExited() {
 
 
 void mousePressed() { 
-	if (!eraserOn && mouseEvent.getClickCount()< 2 && mouseButton == LEFT) {
+	if (!eraserOn && mouseButton == LEFT) {
 		addPoint(mappedMouseX, mappedMouseY);
 	} else if (eraserOn && mouseButton == LEFT) {
 		eraseArea(mappedMouseX, mappedMouseY);
