@@ -8,256 +8,280 @@
 //
 // FOSStriangulator is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with FOSStriangulator.  If not, see <http://www.gnu.org/licenses/>.
+// along with FOSStriangulator.	If not, see <http://www.gnu.org/licenses/>.
 
 // the ControlFrame class extends PApplet, so we 
 // are creating a new processing applet inside a
 // new frame with a controlP5 object loaded
 
-public class ControlFrame extends PApplet 
-{
-  int w, h;
-  String name;
-  PApplet parent;
-  ControlP5 controlP5;
-  
-  public ControlFrame(PApplet _parent, int _w, int _h, String _name) 
-  {
-    super();   
-    parent = _parent;
-    w=_w;
-    h=_h;
-    name = _name;
-  
-    PApplet.runSketch(new String[]{name}, this);
-  }
-  
-  public void settings() 
-  {
-    size(w, h);
-  }
-  
-  public void setup() 
-  {
-    surface.setTitle(name);
-    surface.setLocation(initWindowLocationX,initWindowLocationY);
-    frameRate(25); // todo remove all frameRate methods?
-    controlP5 = new ControlP5(this);
-    
-    //UI sizes
-    int marginX = 10;
-    int groupInsetX = 10;
-    int groupWidth = controlFrameWidth - (4*marginX);
-    int[] largeButtonSize = {(groupWidth - 2*groupInsetX), 20};
-    int sliderWidth = 90 + 90 + 25;
-    
-    //Color styles 
-    controlP5.setColorForeground(Colors.ACCENT_800);
-    controlP5.setColorBackground(Colors.BG_700);
-    controlP5.setColorActive(Colors.ACCENT_700);
-    
-    //Components
-    openImageBtn = 
-    controlP5.addButton("openImageBtn")
-    .setPosition(marginX,20)
-    .setSize(groupWidth,largeButtonSize[1]+10)
-    .plugTo(parent,"openImage")
-    .setLabel("Choose an image")
-    .linebreak()
-    ;
+public class ControlFrame extends PApplet {
+	int w, h;
+	String name;
+	PApplet parent;
+	ControlP5 controlP5;
+	
+	public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
+		super();	 
+		parent = _parent;
+		w=_w;
+		h=_h;
+		name = _name;
+	
+		PApplet.runSketch(new String[]{name}, this);
+	}
+	
+	public void settings() {
+		size(w, h);
+	}
+	
+	public void setup() {
+		surface.setTitle(name);
+		surface.setLocation(UIDimen.INIT_SIDEBAR_X, UIDimen.INIT_SIDEBAR_Y);
+		frameRate(25); // todo remove all frameRate methods?
+		controlP5 = new ControlP5(this);
+		
+		// COLOR STYLES
+		controlP5.setColorForeground(Colors.ACCENT_800);
+		controlP5.setColorBackground(Colors.BG_700);
+		controlP5.setColorActive(Colors.ACCENT_700);
 
-    loadPtsBtn =  
-    controlP5.addButton("loadPtsBtn")
-    .setPosition(marginX,openImageBtn.getPosition()[1] + openImageBtn.getHeight() + 10)
-    .setSize(groupWidth,largeButtonSize[1])
-    .plugTo(parent,"loadPts")
-    .setLabel("Load points");
-  
-    Group generationGroup = 
-    controlP5.addGroup("generationGroup")
-    .setPosition(marginX,loadPtsBtn.getPosition()[1] + loadPtsBtn.getHeight() + 30)
-    .setLabel("Generate points")
-    .setBackgroundColor(Colors.BG_950)
-    .setSize(groupWidth,130)
-    .disableCollapse()
-    ;
-    
-    edgeWeightSlider = 
-    controlP5.addSlider("edgeWeightSlider")
-    .setPosition(groupInsetX,10)
-    .setSize(sliderWidth,largeButtonSize[1])
-    .setRange(0,25)
-    .setValue(1)
-    .setLabel("Edge weight")
-    .plugTo(parent,"setEdgeWeight")
-    .setGroup(generationGroup)
-    ;
-    
-    edgeThresholdSlider = 
-    controlP5.addSlider("edgeThresholdSlider")
-    .setPosition(groupInsetX,40)
-    .setSize(sliderWidth,largeButtonSize[1])
-    .setRange(0,254)
-    .setValue(80)
-    .setLabel("Edge threshold")
-    .plugTo(parent,"setEdgeThreshold")
-    .setGroup(generationGroup)
-    ;
-    
-    edgePtsSlider = 
-    controlP5.addSlider("edgePtsSlider")
-    .setPosition(groupInsetX,70)
-    .setSize(sliderWidth,largeButtonSize[1])
-    .setRange(0,1000)
-    .setValue(0)
-    .setLabel("# of edge points")
-    .plugTo(parent,"setEdgePts")
-    .setGroup(generationGroup)
-    ;
-  
-    randomPtsSlider = 
-    controlP5.addSlider("randomPtsSlider")
-    .setPosition(groupInsetX,100)
-    .setSize(sliderWidth,largeButtonSize[1])
-    .setRange(0,1000)
-    .setValue(0)
-    .setLabel("# of random points")
-    .plugTo(parent,"setRandomPts")
-    .setGroup(generationGroup)
-    ;
+		// POSITION TRACKING
+		int nextY = UIDimen.MARGIN_UNIT;
+		int nextHeight = 0;
+		int groupY = UIDimen.MARGIN_UNIT;
+		int groupHeight = 0;
+		
+		// COMPONENTS
+		nextHeight = UIDimen.BTN_LARGE_HEIGHT;
+		openImageBtn = 
+			controlP5.addButton("openImageBtn")
+			.setPosition(UIDimen.MARGIN_UNIT, UIDimen.MARGIN_UNIT)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.plugTo(parent,"openImage")
+			.setLabel("Choose an image")
+			.linebreak();
+		
+		nextY += nextHeight + UIDimen.MARGIN_UNIT;
+		nextHeight = UIDimen.BTN_HEIGHT;
+		loadPtsBtn = 
+			controlP5.addButton("loadPtsBtn")
+			.setPosition(UIDimen.MARGIN_UNIT, nextY)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.plugTo(parent,"loadPts")
+			.setLabel("Load points");
 
-    Group displayGroup = 
-    controlP5.addGroup("displayGroup")
-    .setPosition(marginX,generationGroup.getPosition()[1] + generationGroup.getBackgroundHeight() + 30)
-    .setLabel("Display mode")
-    .setBackgroundColor(Colors.BG_950)
-    .setSize(groupWidth,70)
-    .disableCollapse()
-    ;
-   
-    modeRadio = controlP5.addRadioButton("modeRadio")
-    .setPosition(groupInsetX,10)
-    .setSize(20,largeButtonSize[1])
-    .setItemsPerRow(3)
-    .setSpacingColumn(90)
-    .setSpacingRow(10)
-    .addItem("Points (p)",Mode.POINTS)
-    .addItem("Mesh (m)",Mode.MESH)
-    .addItem("Contour (c)",Mode.CONTOUR)
-    .addItem("Result (r)",Mode.RESULT)
-    .activate(Mode.MESH)
-    .plugTo(parent,"setMode")
-    .setGroup(displayGroup)
-    ;
-  
-    Group eraserGroup = 
-    controlP5.addGroup("eraserGroup")
-    .setPosition(marginX,displayGroup.getPosition()[1] + displayGroup.getBackgroundHeight() + 30)
-    .setLabel("Eraser")
-    .setBackgroundColor(Colors.BG_950)
-    .setSize(groupWidth,52)
-    .disableCollapse()
-    ;
-  
-    eraserToggle =
-    controlP5.addToggle("eraserToggle")
-    .plugTo(parent,"toggleEraser")
-    .setPosition(groupInsetX,groupInsetX)
-    .setSize(40,largeButtonSize[1])
-    .setLabel("On/off (e)")
-    .setGroup(eraserGroup)
-    ;
+		// Display group
+		nextY += nextHeight + UIDimen.GROUP_SEPARATION;
+		nextHeight = 2 * UIDimen.BTN_HEIGHT + 3 * UIDimen.MARGIN_UNIT;
+		Group displayGroup = 
+			controlP5.addGroup("displayGroup")
+			.setPosition(UIDimen.MARGIN_UNIT, nextY)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.setLabel("Display mode")
+			.setBackgroundColor(Colors.BG_950)
+			.disableCollapse()
+			;
 
-    eraserSizeSlider = 
-    controlP5.addSlider("eraserSizeSlider")
-    .setPosition(eraserToggle.getPosition()[0] + eraserToggle.getWidth() + 10,groupInsetX)
-    .setSize(sliderWidth - eraserToggle.getWidth() - 10,largeButtonSize[1])
-    .setRange(minEraserSize,maxEraserSize)
-    .setValue(eraserSize)
-    .setLabel("Eraser size ([, ])")
-    .plugTo(parent,"setEraserSize")
-    .setGroup(eraserGroup)
-    ;
+		modeRadio = controlP5.addRadioButton("modeRadio")
+			.setPosition(UIDimen.MARGIN_UNIT, UIDimen.MARGIN_UNIT)
+			.setSize(UIDimen.BTN_HEIGHT, UIDimen.BTN_HEIGHT)
+			.setItemsPerRow(3)
+			.setSpacingColumn(90)
+			.setSpacingRow(10)
+			.addItem("Points (p)",Mode.POINTS)
+			.addItem("Mesh (m)",Mode.MESH)
+			.addItem("Contour (c)",Mode.CONTOUR)
+			.addItem("Result (r)",Mode.RESULT)
+			.activate(Mode.MESH)
+			.plugTo(parent,"setMode")
+			.setGroup(displayGroup)
+			;
 
-    Group exportGroup = 
-    controlP5.addGroup("exportGroup")
-    .setPosition(marginX,eraserGroup.getPosition()[1] + eraserGroup.getBackgroundHeight() + 30)
-    .setLabel("Export")
-    .setBackgroundColor(Colors.BG_950)
-    .setSize(groupWidth,40)
-    .disableCollapse()
-    ;
 
-    Button saveSVGBtn = 
-    controlP5.addButton("saveSVGBtn")
-    .setPosition(groupInsetX,groupInsetX)
-    .setSize(groupWidth/3-9,largeButtonSize[1])
-    .setLabel("SVG")
-    .plugTo(parent,"saveSVG")
-    .setGroup(exportGroup)
-    ;
+		// Display group
+		nextY += nextHeight + UIDimen.GROUP_SEPARATION;
+		nextHeight = UIDimen.BTN_HEIGHT + 2 * UIDimen.MARGIN_UNIT + UIDimen.LABEL_HEIGHT;
+		Group eraserGroup = 
+			controlP5.addGroup("eraserGroup")
+			.setPosition(UIDimen.MARGIN_UNIT, nextY)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.setLabel("Eraser")
+			.setBackgroundColor(Colors.BG_950)
+			.disableCollapse()
+			;
+	
+		eraserToggle =
+		controlP5.addToggle("eraserToggle")
+			.plugTo(parent,"toggleEraser")
+			.setPosition(UIDimen.MARGIN_UNIT, UIDimen.MARGIN_UNIT)
+			.setSize(40, UIDimen.BTN_HEIGHT)
+			.setLabel("On/off (e)")
+			.setGroup(eraserGroup)
+			;
 
-    Button savePDFBtn = 
-    controlP5.addButton("savePDFBtn")
-    .setPosition(saveSVGBtn.getPosition()[0] + saveSVGBtn.getWidth() + 4,10)
-    .setSize(groupWidth/3-9,largeButtonSize[1])
-    .setLabel("PDF")
-    .plugTo(parent,"savePDF")
-    .setGroup(exportGroup)
-    ;
-       
-    Button saveOBJBtn = 
-    controlP5.addButton("saveOBJBtn")
-    .setPosition(savePDFBtn.getPosition()[0] + savePDFBtn.getWidth() + 4,10)
-    .setSize(groupWidth/3-9,largeButtonSize[1])
-    .setLabel("OBJ")
-    .plugTo(parent,"saveOBJ")
-    .setGroup(exportGroup)
-    ;
+		eraserSizeSlider = 
+			controlP5.addSlider("eraserSizeSlider")
+			.setPosition(eraserToggle.getPosition()[0] + eraserToggle.getWidth() + UIDimen.MARGIN_UNIT, UIDimen.MARGIN_UNIT)
+			.setSize(UIDimen.SLIDER_WIDTH - eraserToggle.getWidth() - UIDimen.MARGIN_UNIT, UIDimen.BTN_HEIGHT)
+			.setRange(minEraserSize,maxEraserSize)
+			.setValue(eraserSize)
+			.setLabel("Eraser size ([, ])")
+			.plugTo(parent,"setEraserSize")
+			.setGroup(eraserGroup)
+			;
+		
+		// Point generation group
+		nextY += nextHeight + UIDimen.GROUP_SEPARATION;
+		nextHeight = 4 * UIDimen.BTN_HEIGHT + 5 * UIDimen.MARGIN_UNIT;
+		Group generationGroup = 
+			controlP5.addGroup("generationGroup")
+			.setPosition(UIDimen.MARGIN_UNIT, nextY)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.setLabel("Generate points")
+			.setBackgroundColor(Colors.BG_950)
+			.disableCollapse()
+			;
+		
+		groupY = UIDimen.MARGIN_UNIT;
+		groupHeight = UIDimen.BTN_HEIGHT;
+		edgeWeightSlider = 
+			controlP5.addSlider("edgeWeightSlider")
+			.setPosition(UIDimen.MARGIN_UNIT, groupY)
+			.setSize(UIDimen.SLIDER_WIDTH, groupHeight)
+			.setRange(0,25)
+			.setValue(1)
+			.setLabel("Edge weight")
+			.plugTo(parent,"setEdgeWeight")
+			.setGroup(generationGroup)
+			;
+		
+		groupY += groupHeight + UIDimen.MARGIN_UNIT;
+		groupHeight = UIDimen.BTN_HEIGHT;
+		edgeThresholdSlider = 
+			controlP5.addSlider("edgeThresholdSlider")
+			.setPosition(UIDimen.MARGIN_UNIT, groupY)
+			.setSize(UIDimen.SLIDER_WIDTH, groupHeight)
+			.setRange(0,254)
+			.setValue(80)
+			.setLabel("Edge threshold")
+			.plugTo(parent,"setEdgeThreshold")
+			.setGroup(generationGroup)
+			;
+		
+		groupY += groupHeight + UIDimen.MARGIN_UNIT;
+		groupHeight = UIDimen.BTN_HEIGHT;
+		edgePtsSlider = 
+			controlP5.addSlider("edgePtsSlider")
+			.setPosition(UIDimen.MARGIN_UNIT, groupY)
+			.setSize(UIDimen.SLIDER_WIDTH, groupHeight)
+			.setRange(0,1000)
+			.setValue(0)
+			.setLabel("# of edge points")
+			.plugTo(parent,"setEdgePts")
+			.setGroup(generationGroup)
+			;
+	
+		groupY += groupHeight + UIDimen.MARGIN_UNIT;
+		groupHeight = UIDimen.BTN_HEIGHT;
+		randomPtsSlider = 
+			controlP5.addSlider("randomPtsSlider")
+			.setPosition(UIDimen.MARGIN_UNIT, groupY)
+			.setSize(UIDimen.SLIDER_WIDTH, groupHeight)
+			.setRange(0,1000)
+			.setValue(0)
+			.setLabel("# of random points")
+			.plugTo(parent,"setRandomPts")
+			.setGroup(generationGroup)
+			;
 
-    savePtsBtn = 
-    controlP5.addButton("savePtsBtn")
-    .setPosition(marginX,exportGroup.getPosition()[1] + exportGroup.getBackgroundHeight() + 15)
-    .setSize(groupWidth,largeButtonSize[1] + 10)
-    .plugTo(parent,"savePts")
-    .setLabel("Save points")
-    ;
-     
-    messageArea = 
-    controlP5.addTextarea("messageArea")
-    .setPosition(marginX,savePtsBtn.getPosition()[1] + savePtsBtn.getHeight() + 15)
-    .setSize(groupWidth,60)
-    .setLineHeight(14)
-    .setColor(Colors.ON_BG)
-    .setColorBackground(Colors.BG_950)
-    .setBorderColor(Colors.BG_950)
-    .setText("");
+		// Export group
 
-    resetMessageArea();
-  }
+		// TODO Need to figure out how to make expand and collapse dynamic
+		// nextY += generationGroup.isCollapse() ? generationGroup.getBarHeight() : generationGroup.getBackgroundHeight();
+		// nextY += UIDimen.GROUP_SEPARATION;
+		
+		nextY += nextHeight + UIDimen.GROUP_SEPARATION;
+		nextHeight = UIDimen.BTN_HEIGHT + 2 * UIDimen.MARGIN_UNIT;
+		Group exportGroup = 
+			controlP5.addGroup("exportGroup")
+			.setPosition(UIDimen.MARGIN_UNIT, nextY)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.setLabel("Export")
+			.setBackgroundColor(Colors.BG_950)
+			.disableCollapse()
+			;
 
-  public void draw() 
-  {
-      background(Colors.BG_900);
-  }
-  
+		Button saveSVGBtn = 
+			controlP5.addButton("saveSVGBtn")
+			.setPosition(UIDimen.MARGIN_UNIT, UIDimen.MARGIN_UNIT)
+			.setSize(UIDimen.GROUP_COL_WIDTH_3, UIDimen.BTN_HEIGHT)
+			.setLabel("SVG")
+			.plugTo(parent,"saveSVG")
+			.setGroup(exportGroup)
+			;
 
-  public ControlP5 control() 
-  {
-    return controlP5;
-  }
+		Button savePDFBtn = 
+			controlP5.addButton("savePDFBtn")
+			.setPosition(saveSVGBtn.getPosition()[0] + saveSVGBtn.getWidth() + UIDimen.MARGIN_UNIT/2, UIDimen.MARGIN_UNIT)
+			.setSize(UIDimen.GROUP_COL_WIDTH_3,UIDimen.BTN_HEIGHT)
+			.setLabel("PDF")
+			.plugTo(parent,"savePDF")
+			.setGroup(exportGroup)
+			;
+			 
+		Button saveOBJBtn = 
+			controlP5.addButton("saveOBJBtn")
+			.setPosition(savePDFBtn.getPosition()[0] + savePDFBtn.getWidth() + UIDimen.MARGIN_UNIT/2, UIDimen.MARGIN_UNIT)
+			.setSize(UIDimen.GROUP_COL_WIDTH_3,UIDimen.BTN_HEIGHT)
+			.setLabel("OBJ")
+			.plugTo(parent,"saveOBJ")
+			.setGroup(exportGroup)
+			;
 
-  // key presses within control panel
-  void keyPressed()
-  {
-    if (key == CODED) {
-      codedKeyPressed(keyCode);
-    } else {
-      globalKeyPressed(key);
-    }
-  }
+		nextY += nextHeight + UIDimen.ELEMENT_SEPARATION;
+		nextHeight = UIDimen.BTN_LARGE_HEIGHT;
+		savePtsBtn = 
+			controlP5.addButton("savePtsBtn")
+			.setPosition(UIDimen.MARGIN_UNIT, nextY)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.plugTo(parent,"savePts")
+			.setLabel("Save points")
+			;
+		
+		nextY += nextHeight + UIDimen.ELEMENT_SEPARATION;
+		nextHeight = UIDimen.MESSAGE_BOX_HEIGHT;
+		messageArea = 
+			controlP5.addTextarea("messageArea")
+			.setPosition(UIDimen.MARGIN_UNIT, nextY)
+			.setSize(UIDimen.GROUP_WIDTH, nextHeight)
+			.setLineHeight(14)
+			.setColor(Colors.ON_BG)
+			.setColorBackground(Colors.BG_950)
+			.setBorderColor(Colors.BG_950)
+			.setText("");
+
+		resetMessageArea();
+	}
+
+	public void draw() {
+		background(Colors.BG_900);
+	}
+	
+
+	public ControlP5 control() {
+		return controlP5;
+	}
+
+	// key presses within control panel
+	void keyPressed() {
+		if (key == CODED) {
+			codedKeyPressed(keyCode);
+		} else {
+			globalKeyPressed(key);
+		}
+	}
 }

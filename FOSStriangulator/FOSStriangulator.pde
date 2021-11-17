@@ -47,9 +47,6 @@ Toggle eraserToggle;
 Textarea messageArea;
 Slider edgeWeightSlider, edgeThresholdSlider, edgePtsSlider, randomPtsSlider, eraserSizeSlider;
 Button openImageBtn, loadPtsBtn, savePtsBtn;
-int controlFrameWidth = 360;
-int initWindowLocationX = 100;
-int initWindowLocationY = 100;
 
 //Pan Zoom variables
 float zoom;
@@ -84,7 +81,7 @@ void setup()
   surface.setResizable(true);
 	surface.setSize(img.width, img.height);
 	surface.setTitle("FOSStriangulator");
-  surface.setLocation(initWindowLocationX+controlFrameWidth,initWindowLocationY);
+  surface.setLocation(UIDimen.INIT_SIDEBAR_X + UIDimen.SIDEBAR_WIDTH, UIDimen.INIT_SIDEBAR_Y);
   surface.setIcon(icon);
 
 	//standard corner points
@@ -106,7 +103,7 @@ void setup()
 	smooth();
 
 	controlP5 = new ControlP5(this);
-	ControlFrame cf = new ControlFrame(this, 340, 690, "Tools");
+	ControlFrame cf = new ControlFrame(this, UIDimen.SIDEBAR_WIDTH, UIDimen.SIDEBAR_HEIGHT, "Tools");
 }
 
 void draw()
