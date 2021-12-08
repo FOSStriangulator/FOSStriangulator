@@ -10,6 +10,10 @@ Based on [Concept Farm](https://www.conceptfarm.ca/)'s [Image Triangulator](http
 
 Alternatively, you can download a ZIP containing a JAR file from the [Releases page](https://github.com/FOSStriangulator/FOSStriangulator/releases).
 
+## Like and share
+Give FOSStriangulator a like on [AlternativeTo](https://alternativeto.net/software/fosstriangulator/about/) and spread word about the app on social media.
+
+
 ## Contribute
 
 Contributions are welcome!
@@ -18,5 +22,10 @@ Contributions are welcome!
 
 See open [issues](https://github.com/FOSStriangulator/FOSStriangulator/issues) for ways how to contribute or submit your own.
 
-## Like and share
-Give FOSStriangulator a like on [AlternativeTo](https://alternativeto.net/software/fosstriangulator/about/) and spread word about the app on social media.
+## Build
+
+To build the app yourself:
+
+1. Clone or download this repository.
+2. Download [Processing](https://processing.org/download) — the official installer installs both the core libraries and the Processing DE.
+3. Open up the FOSStriangulator/FOSStriangulator.pde file from this repository in the Processing DE.
